@@ -3,10 +3,10 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "./Ownership.sol";
 
-contract MyNFT is ERC721, ERC721URIStorage, Ownable {
+contract MyNFT is ERC721, ERC721URIStorage, Whitelist {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
@@ -19,7 +19,7 @@ contract MyNFT is ERC721, ERC721URIStorage, Ownable {
         return "ipfs://";
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri) public onlyMember {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
@@ -40,21 +40,5 @@ contract MyNFT is ERC721, ERC721URIStorage, Ownable {
         returns (string memory)
     {
         return super.tokenURI(tokenId);
-    }
-
-    function icContentOwned(string memory uri) public view returns (bool) {
-        return existingURIs[uri];
-    }
-
-    function payToMint(address recipient, string memory metadataURI)
-        public
-        payable
-        returns (uint256)
-    {
-        require(!existingURIs[metadataURI], "Licence has already been minted");
-        require(msg.value >= 0.05 ether, "Pay up");
-        existingURIs[metadataURI] = true;
-        safeMint(recipient, metadataURI);
-        return _tokenIdCounter.current() - 1;
     }
 }
