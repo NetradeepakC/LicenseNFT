@@ -33,10 +33,7 @@ contract LicenseERC721 is ERC721, ERC721URIStorage, Whitelist {
         return serial;
     }
 
-    function safeBurn(uint256 tokenId)
-        override
-        onlyMember(ERC721, ERC721URIStorage)
-    {
+    function safeBurn(uint256 tokenId) public onlyMember {
         super._burn(tokenId);
     }
 
