@@ -9,14 +9,14 @@ const Hero = (props) => {
     },
     {
       type: "Seller",
-      heading: "Warranties",
+      heading: "Issuing Warranties",
       description:
         "Mai seller hai bohut warrenty dede bhai , kya hee hoga, customer ko thogunga",
     },
   ];
   var jsx;
   typeOfUser.forEach((item) => {
-    if ((item.type = props.name)) {
+    if (item.type == props.name) {
       console.log("Success");
       jsx = (
         <>
