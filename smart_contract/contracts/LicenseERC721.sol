@@ -22,10 +22,10 @@ contract LicenseERC721 is ERC721, ERC721URIStorage, Whitelist {
     function safeMint(
         address to,
         string memory uri,
-        uint256 serial,
         uint24 day
-    ) public onlyMember returns (uint256) {
+    ) public onlyRegistered returns (uint256) {
         require(!existingURIs[uri], "URI already in use.");
+        uint256 serial = addSerial();
         _safeMint(to, serial);
         _setTokenURI(serial, uri);
         existingURIs[uri] = true;
@@ -33,8 +33,8 @@ contract LicenseERC721 is ERC721, ERC721URIStorage, Whitelist {
         return serial;
     }
 
-    function safeBurn(uint256 tokenId) public onlyMember {
-        super._burn(tokenId);
+    function safeBurn(uint256 serial) public onlyMember(serial) {
+        super._burn(serial);
     }
 
     function _burn(uint256 tokenId)

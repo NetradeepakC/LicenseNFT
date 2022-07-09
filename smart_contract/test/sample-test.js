@@ -13,10 +13,10 @@ describe("MyNFT", function() {
         let balance = await firedguys.balanceOf(recipient);
         expect(balance).to.equal(0);
 
-        const newlyMintedToken =  await firedguys.safeMint(recipient, metadataURI, 10, 10);
+        const newlyMintedToken =  await firedguys.safeMint(recipient, metadataURI, 10);
         //console.log(newlyMintedToken);
         const metadataURI2 = 'cid/test2.png'
-        const newlyMintedToken2 =  await firedguys.safeMint(recipient, metadataURI2, 20, 10);
+        const newlyMintedToken2 =  await firedguys.safeMint(recipient, metadataURI2, 10);
         //console.log(newlyMintedToken2);
     })
 })
