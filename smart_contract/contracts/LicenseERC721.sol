@@ -7,15 +7,13 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./Ownership.sol";
 import "hardhat/console.sol";
 
-contract MyNFT is ERC721, ERC721URIStorage, Whitelist {
+contract LicenseERC721 is ERC721, ERC721URIStorage, Whitelist {
     using Counters for Counters.Counter;
 
-    Counters.Counter private _tokenIdCounter;
+    mapping(string => bool) private existingURIs;
+    uint24[] private maxTime;
 
-    mapping(string => bool) existingURIs;
-    uint24[] maxTime;
-
-    constructor() ERC721("MyNFT", "MNFT") {}
+    constructor() ERC721("LicenseERC721", "LicenseERC721") {}
 
     function _baseURI() internal pure override returns (string memory) {
         return "ipfs://";
@@ -24,16 +22,22 @@ contract MyNFT is ERC721, ERC721URIStorage, Whitelist {
     function safeMint(
         address to,
         string memory uri,
+        uint256 serial,
         uint24 day
     ) public onlyMember returns (uint256) {
-        require(!existingURIs[uri], "Token already in use.");
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
+        require(!existingURIs[uri], "URI already in use.");
+        _safeMint(to, serial);
+        _setTokenURI(serial, uri);
         existingURIs[uri] = true;
         maxTime.push(day);
-        return tokenId;
+        return serial;
+    }
+
+    function safeBurn(uint256 tokenId)
+        override
+        onlyMember(ERC721, ERC721URIStorage)
+    {
+        super._burn(tokenId);
     }
 
     function _burn(uint256 tokenId)
