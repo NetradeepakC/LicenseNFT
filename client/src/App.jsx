@@ -1,12 +1,8 @@
-import CircularGradient from "./Componenets/CircularGradient";
-import Hero from "./Componenets/Hero";
+import HomePage from "./Pages/HomePage";
 function App() {
   return (
     <>
-      <div className="container bg-mainBg">
-        <CircularGradient />
-        <Hero name="Customer" />
-      </div>
+      <HomePage />
     </>
   );
 }
