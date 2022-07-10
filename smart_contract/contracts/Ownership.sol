@@ -3,6 +3,7 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "hardhat/console.sol";
 
 contract Whitelist is Ownable {
     using Counters for Counters.Counter;
@@ -11,9 +12,19 @@ contract Whitelist is Ownable {
     mapping(address => bool) private usedBrandIDs;
     mapping(uint256 => bool) private usedSerials;
     mapping(uint256 => address) private serialBrandMap;
+    mapping(address => bool) private creator;
 
     constructor() {
         usedBrandIDs[msg.sender] = true;
+        creator[msg.sender] = true;
+    }
+
+    modifier onlyCreator() {
+        require(
+            creator[msg.sender],
+            "Function accessible only by the member of the brand!!"
+        );
+        _;
     }
 
     modifier onlyMember(uint256 serial) {
@@ -25,6 +36,8 @@ contract Whitelist is Ownable {
     }
 
     modifier onlyRegistered() {
+        console.log(msg.sender);
+        console.log(usedBrandIDs[msg.sender]);
         require(usedBrandIDs[msg.sender], "Unrecognised member");
         _;
     }
@@ -37,7 +50,8 @@ contract Whitelist is Ownable {
         return serial;
     }
 
-    function addMember(address _member) public onlyOwner {
+    function addMember(address _member) public onlyCreator {
+        require(!usedBrandIDs[msg.sender], "Address already registered");
         usedBrandIDs[_member] = true;
     }
 }
