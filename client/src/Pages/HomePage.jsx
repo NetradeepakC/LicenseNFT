@@ -4,6 +4,7 @@ import Hero from "../Componenets/Hero";
 import FeatureBox from "../Componenets/FeatureBox";
 import ForBox from "../Componenets/ForBox";
 import Footer from "../Componenets/Footer";
+import NavBar from "../Componenets/NavBar";
 const HomePage = (props) => {
   var name = props.typeOfLogin == "customer" ? "customer" : "company";
   console.log(name);

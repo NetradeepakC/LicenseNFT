@@ -1,9 +1,9 @@
 import HomePage from "./Pages/HomePage";
 function App() {
   return (
-    <>
-      <HomePage typeOfLogin="customer" />
-    </>
+      <>
+        <HomePage typeOfLogin="customer" />
+      </>
   );
 }
 
