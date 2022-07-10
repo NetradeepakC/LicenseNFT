@@ -3,12 +3,12 @@ import React from "react";
 const Hero = (props) => {
   const typeOfUser = [
     {
-      type: "Customer",
+      type: "customer",
       heading: "Warranties",
       description: "Mai customer hai bohut warrenty dede bhai , kya hee hoga",
     },
     {
-      type: "Seller",
+      type: "company",
       heading: "Issuing Warranties",
       description:
         "Mai seller hai bohut warrenty dede bhai , kya hee hoga, customer ko thogunga",
@@ -16,7 +16,7 @@ const Hero = (props) => {
   ];
   var jsx;
   typeOfUser.forEach((item) => {
-    if (item.type == props.name) {
+    if (item.type == props.typeOfLogin) {
       console.log("Success");
       jsx = (
         <>

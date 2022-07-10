@@ -4,13 +4,15 @@ import Hero from "../Componenets/Hero";
 import FeatureBox from "../Componenets/FeatureBox";
 import ForBox from "../Componenets/ForBox";
 import Footer from "../Componenets/Footer";
-const HomePage = () => {
+const HomePage = (props) => {
+  var name = props.typeOfLogin == "customer" ? "customer" : "company";
+  console.log(name);
   return (
     <div className="container bg-mainBg flex flex-wrap flex-col">
       <CircularGradient />
-      <Hero name="Customer" />
-      <FeatureBox name="Customer" />
-      <ForBox name="Customer" />
+      <Hero typeOfLogin={name} />
+      <FeatureBox typeOfLogin={name} />
+      <ForBox typeOfLogin={name} />
       <Footer />
     </div>
   );
