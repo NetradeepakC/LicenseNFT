@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "./LicenseERC721.sol";
+import "./License.sol";
 
-contract SoulBoundLicense is LicenseERC721 {
+contract SoulBoundLicense is License {
     constructor() {}
 
     event Attest(address indexed to, uint256 indexed tokenId);

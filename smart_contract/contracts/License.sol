@@ -6,13 +6,13 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "./Ownership.sol";
 import "hardhat/console.sol";
 
-contract LicenseERC721 is ERC721, ERC721URIStorage, Whitelist {
+contract License is ERC721, ERC721URIStorage, Whitelist {
     using Counters for Counters.Counter;
 
     mapping(string => bool) private existingURIs;
     uint24[] private maxTime;
 
-    constructor() ERC721("LicenseERC721", "LicenseERC721") {}
+    constructor() ERC721("License", "License") {}
 
     function _baseURI() internal pure override returns (string memory) {
         return "ipfs://";
