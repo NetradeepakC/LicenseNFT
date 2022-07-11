@@ -1,4 +1,4 @@
-const LicenseChain = artifacts.require("./License.sol");
+const License = artifacts.require("License");
 
 // contract("License",()=>{
 //     it('Mint license', async()=>{
