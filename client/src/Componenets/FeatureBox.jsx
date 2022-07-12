@@ -35,7 +35,7 @@ const FeatureBox = (props) => {
       jsx = (
         <>
           <div className="flex flex-wrap w-screen h-screen items-center gap-20">
-            <h1 className="text-center first:self-center mx-auto max-w-2xl text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white font-poppins">
+            <h1 className="text-center first:self-center mx-auto max-w-2xl text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white font-poppins">
               {item.caption}
             </h1>
 
