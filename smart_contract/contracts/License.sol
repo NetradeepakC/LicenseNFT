@@ -32,6 +32,14 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         return serial;
     }
 
+    function get10() public returns (uint256) {
+        return 10;
+    }
+
+    function pureget10() public pure returns (uint256) {
+        return 10;
+    }
+
     function safeBurn(uint256 serial) public onlyMember(serial) {
         super._burn(serial);
     }
