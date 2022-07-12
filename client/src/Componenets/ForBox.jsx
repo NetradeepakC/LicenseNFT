@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ForBox = (props) => {
   const clickHandler = () => {};
@@ -21,6 +22,7 @@ const ForBox = (props) => {
   var jsx;
   typeOfUser.forEach((item) => {
     if (item.type == props.typeOfLogin) {
+      var redirectLink = item.type == "customer" ? "/company" : "/";
       jsx = (
         <>
           <h1 className="text-center text-white font-poppins text-5xl font-extrabold">
@@ -30,10 +32,11 @@ const ForBox = (props) => {
             {item.description}
           </p>
           <div className="btn flex flex-wrap justify-center w-1/3 self-center">
-            <a
-              href="#"
-              className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-btnColor hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
-              onClick={clickHandler}
+            <div
+              className="cursor-pointer inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-btnColor hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+              onClick={() => {
+                window.location.href = redirectLink;
+              }}
             >
               {item.btn_desc}
               <svg
@@ -48,7 +51,7 @@ const ForBox = (props) => {
                   clipRule="evenodd"
                 />
               </svg>
-            </a>
+            </div>
           </div>
         </>
       );
