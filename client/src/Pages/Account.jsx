@@ -41,9 +41,9 @@ export default function Account() {
                         <h2 className={info_css.name + "text-right" }>SalvadorDali</h2>
                     </div>
                 </div>
-                <div className="flex mt-6">
-                        <button className="box-border inline-block h-20 rounded-xl w-auto border-2 border-[#1E50FF]">Purchase Now</button>
-                        <button className="box-border inline-block h-20 rounded-xl w-auto bg-[#1E50FF]">Make a Bid</button>
+                <div className="grid grid-cols-2 gap-4 w-full mt-6">
+                        <button className="box-border col-span-1 h-20 rounded-xl w-auto border-2 border-[#1E50FF]">Purchase Now</button>
+                        <button className="box-border col-span-1 h-20 rounded-xl w-auto bg-[#1E50FF]">Make a Bid</button>
                 </div>
             </div>
         </div>
