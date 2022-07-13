@@ -35,7 +35,7 @@ contract Whitelist is Ownable {
     }
 
     modifier onlyRegistered() {
-        require(usedBrandIDs[msg.sender], "Unrecognised member");
+        require(usedBrandIDs[msg.sender], "Only registered members allowed");
         _;
     }
 
@@ -48,7 +48,7 @@ contract Whitelist is Ownable {
     }
 
     function addMember(address _member) public onlyCreator {
-        require(!usedBrandIDs[msg.sender], "Address already registered");
+        require(!usedBrandIDs[_member], "Address already registered");
         usedBrandIDs[_member] = true;
     }
 }
