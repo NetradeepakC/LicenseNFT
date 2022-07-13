@@ -14,10 +14,13 @@ export default function MainContent() {
     }
 
     return (
-        <div className="flex text-white mx-auto w-3/4 font-bold">
-            <img src={bird} alt="I am a bird" className="max-w-3xl p-10" />
-            <div className="p-10">
-                <h1 className="text-6xl">#id Seagull</h1>
+        <div className="grid grid-cols-2 text-white mx-auto w-3/4">
+            <div className="h-1/2 p-10">
+                <img src={bird} alt="I am a bird"  />
+
+            </div>
+            <div className="p-10 flex flex-col">
+                <h1 className="text-6xl font-bold">#id Seagull</h1>
                 <p className="text-sm text-[#ADB9C7] py-10 leading-8">
                     This is some description Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                     Neque cum provident doloribus, beatae magni mollitia? Veniam odio adipisci doloribus facilis aut 
@@ -34,7 +37,7 @@ export default function MainContent() {
                         <h2 className={price_css.price + "text-right"}>10.89 ETH</h2>
                     </div>
                 </div>
-                <div className="flex bg-gray-900 rounded-2xl mb-auto">
+                <div className="flex bg-gray-900 rounded-2xl">
                     <div className="basis-1/2 ">
                         <h1 className={info_css.company}>Company</h1>
                         <h2 className={info_css.name}>SalvadorDali</h2>
@@ -45,7 +48,7 @@ export default function MainContent() {
                         <h2 className={info_css.name + "text-right" }>SalvadorDali</h2>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 w-full mt-6">
+                <div className="grid grid-cols-2 gap-4 w-full flex-grow items-end">
                         <button className="box-border col-span-1 h-20 rounded-xl w-auto border-2 border-[#1E50FF]">Purchase Now</button>
                         <button className="box-border col-span-1 h-20 rounded-xl w-auto bg-[#1E50FF]">Make a Bid</button>
                 </div>
