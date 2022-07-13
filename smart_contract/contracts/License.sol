@@ -4,9 +4,9 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "./Ownership.sol";
-import "hardhat/console.sol";
+import "./Translator.sol";
 
-contract License is ERC721, ERC721URIStorage, Whitelist {
+contract License is ERC721, ERC721URIStorage, Whitelist, Translator {
     using Counters for Counters.Counter;
 
     mapping(string => bool) private existingURIs;

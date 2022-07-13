@@ -3,7 +3,6 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "hardhat/console.sol";
 
 contract Whitelist is Ownable {
     using Counters for Counters.Counter;
@@ -36,8 +35,6 @@ contract Whitelist is Ownable {
     }
 
     modifier onlyRegistered() {
-        console.log(msg.sender);
-        console.log(usedBrandIDs[msg.sender]);
         require(usedBrandIDs[msg.sender], "Unrecognised member");
         _;
     }
