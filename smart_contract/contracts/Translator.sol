@@ -2,7 +2,9 @@
 pragma solidity ^0.8.4;
 
 contract Translator {
-    function getUINT256(uint256 num) public pure returns (uint256) {
-        return num;
+    uint256 internal pass;
+
+    function getUINT256() public view returns (uint256) {
+        return pass;
     }
 }
