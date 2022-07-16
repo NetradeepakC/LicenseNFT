@@ -1,15 +1,15 @@
 import React from "react";
-import CircularGradient from "../Componenets/CircularGradient";
-import Hero from "../Componenets/Hero";
-import FeatureBox from "../Componenets/FeatureBox";
-import ForBox from "../Componenets/ForBox";
-import Footer from "../Componenets/Footer";
-import NavBar from "../Componenets/NavBar";
+import CircularGradient from "../Components/HomePage/CircularGradient";
+import Hero from "../Components/HomePage/Hero";
+import FeatureBox from "../Components/HomePage/FeatureBox";
+import ForBox from "../Components/HomePage/ForBox";
+import Footer from "../Components/HomePage/Footer";
+import NavBar from "../Components/HomePage/NavBar";
 const HomePage = (props) => {
   var name = props.typeOfLogin == "customer" ? "customer" : "company";
   console.log(name);
   return (
-    <div className="container bg-mainBg flex flex-wrap flex-col">
+    <div className="bg-mainBg flex flex-wrap flex-col">
       <NavBar />
       <CircularGradient />
       <Hero typeOfLogin={name} />
