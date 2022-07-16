@@ -17,17 +17,17 @@ contract License is ERC721, ERC721URIStorage, Whitelist, Translator {
     //     return "ipfs://";
     // }
 
-    function safeMint(
+    function mint(
         address to,
+        uint256 tokenId,
         string memory uri,
         uint24 day
     ) public onlyRegistered returns (uint256) {
         require(!existingURIs[uri], "URI already in use.");
-        uint256 tokenId = addSerial();
+        addSerial(tokenId);
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
-        maxTime.push(day);
         return tokenId;
     }
 

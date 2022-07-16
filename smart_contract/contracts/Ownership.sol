@@ -39,12 +39,10 @@ contract Whitelist is Ownable {
         _;
     }
 
-    function addSerial() public onlyRegistered returns (uint256) {
-        uint256 serial = _SerialIds.current();
-        _SerialIds.increment();
+    function addSerial(uint256 serial) public onlyRegistered {
+        require(!usedSerials[serial], "Serial already in use");
         usedSerials[serial] = true;
         serialBrandMap[serial] = msg.sender;
-        return serial;
     }
 
     function addMember(address _member) public onlyCreator {
