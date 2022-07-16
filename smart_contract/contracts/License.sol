@@ -10,13 +10,12 @@ contract License is ERC721, ERC721URIStorage, Whitelist, Translator {
     using Counters for Counters.Counter;
 
     mapping(string => bool) private existingURIs;
-    uint24[] private maxTime;
 
     constructor() ERC721("License", "License") {}
 
-    function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://";
-    }
+    // function _baseURI() internal pure override returns (string memory) {
+    //     return "ipfs://";
+    // }
 
     function safeMint(
         address to,
@@ -24,24 +23,16 @@ contract License is ERC721, ERC721URIStorage, Whitelist, Translator {
         uint24 day
     ) public onlyRegistered returns (uint256) {
         require(!existingURIs[uri], "URI already in use.");
-        uint256 serial = addSerial();
-        _safeMint(to, serial);
-        _setTokenURI(serial, uri);
+        uint256 tokenId = addSerial();
+        _safeMint(to, tokenId);
+        _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
         maxTime.push(day);
-        return serial;
+        return tokenId;
     }
 
-    function get10() public {
-        pass = 10;
-    }
-
-    function pureget10() public pure returns (uint256) {
-        return 10;
-    }
-
-    function safeBurn(uint256 serial) public onlyMember(serial) {
-        super._burn(serial);
+    function safeBurn(uint256 tokenId) public onlyMember(tokenId) {
+        super._burn(tokenId);
     }
 
     function _burn(uint256 tokenId)
