@@ -3,8 +3,9 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "./Misc.sol";
 
-contract Whitelist is Ownable {
+contract Whitelist is Ownable, Misc {
     using Counters for Counters.Counter;
     Counters.Counter private _SerialIds;
 
@@ -40,7 +41,13 @@ contract Whitelist is Ownable {
     }
 
     function addSerial(uint256 serial) public onlyRegistered {
-        require(!usedSerials[serial], "Serial already in use");
+        require(
+            !usedSerials[serial],
+            concatenate(
+                concatenate("Serial ", uintToString(serial)),
+                " already in use"
+            )
+        );
         usedSerials[serial] = true;
         serialBrandMap[serial] = msg.sender;
     }

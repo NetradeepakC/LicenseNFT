@@ -4,9 +4,9 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "./Ownership.sol";
-import "./Translator.sol";
+import "./Misc.sol";
 
-contract License is ERC721, ERC721URIStorage, Whitelist, Translator {
+contract License is ERC721, ERC721URIStorage, Whitelist {
     using Counters for Counters.Counter;
 
     mapping(string => bool) private existingURIs;
@@ -19,15 +19,20 @@ contract License is ERC721, ERC721URIStorage, Whitelist, Translator {
 
     function mint(
         address to,
-        uint256 tokenId,
+        uint16[] memory seeds,
         string memory uri,
         uint24 day
     ) public onlyRegistered returns (uint256) {
         require(!existingURIs[uri], "URI already in use.");
+        uint256 tokenId = 0;
+        for (uint16 i = 0; i < 16; i++) {
+            tokenId = (tokenId << 16) + seeds[i];
+        }
         addSerial(tokenId);
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
+        pass = tokenId;
         return tokenId;
     }
 
