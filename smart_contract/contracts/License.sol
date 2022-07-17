@@ -26,8 +26,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         uint24 day
     ) public onlyRegistered returns (uint256) {
         require(!existingURIs[uri], "URI already in use.");
-        uint256 memory tokenId = 0;
-        uint256 memory i;
+        uint256 tokenId = 0;
+        uint256 i;
         for (i = 16; i >= 1; i--) {
             tokenId = (tokenId << 16) + seeds[i - 1];
         }
@@ -36,8 +36,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
         pass = tokenId;
-        birthtime[tokenId] = block.timestamp;
-        lifespan[tokenId] = lifespan;
+        birthtime[tokenId] = uint64(block.timestamp);
+        lifespan[tokenId] = day;
         return tokenId;
     }
 
@@ -60,13 +60,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         super._burn(tokenId);
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
-        uint64 memory current = block.timestamp;
+    function getTokenURI(uint256 tokenId) public returns (string memory) {
+        uint64 current = uint64(block.timestamp);
         if ((current - birthtime[tokenId]) / (3600 * 24) < lifespan[tokenId]) {
             return super.tokenURI(tokenId);
         } else {
@@ -75,6 +70,19 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             usedSerials[tokenId] = false;
             serialBrandMap[tokenId] = address(0);
             _burn(tokenId);
+            require(false, "License is already expired");
+            return "Ilegal Access: 0";
         }
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        require(false, "Incorrent Token string fetcher used");
+        tokenId = 0;
+        return "Illegal Access: 1";
     }
 }

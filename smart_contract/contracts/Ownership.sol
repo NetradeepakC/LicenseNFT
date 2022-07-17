@@ -10,8 +10,8 @@ contract Whitelist is Ownable, Misc {
     Counters.Counter private _SerialIds;
 
     mapping(address => bool) private usedBrandIDs;
-    mapping(uint256 => bool) private usedSerials;
-    mapping(uint256 => address) private serialBrandMap;
+    mapping(uint256 => bool) internal usedSerials;
+    mapping(uint256 => address) internal serialBrandMap;
     mapping(address => bool) private creator;
 
     constructor() {
