@@ -10,6 +10,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     using Counters for Counters.Counter;
 
     mapping(string => bool) private existingURIs;
+    mapping(uint256 => uint64) private birthtime;
+    mapping(uint256 => uint24) private lifespan;
 
     constructor() ERC721("License", "License") {}
 
@@ -24,8 +26,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         uint24 day
     ) public onlyRegistered returns (uint256) {
         require(!existingURIs[uri], "URI already in use.");
-        uint256 tokenId = 0;
-        uint256 i;
+        uint256 memory tokenId = 0;
+        uint256 memory i;
         for (i = 16; i >= 1; i--) {
             tokenId = (tokenId << 16) + seeds[i - 1];
         }
@@ -34,6 +36,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
         pass = tokenId;
+        birthtime[tokenId] = block.timestamp;
+        lifespan[tokenId] = lifespan;
         return tokenId;
     }
 
@@ -62,6 +66,15 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        return super.tokenURI(tokenId);
+        uint64 memory current = block.timestamp;
+        if ((current - birthtime[tokenId]) / (3600 * 24) < lifespan[tokenId]) {
+            return super.tokenURI(tokenId);
+        } else {
+            birthtime[tokenId] = 0;
+            lifespan[tokenId] = 0;
+            usedSerials[tokenId] = false;
+            serialBrandMap[tokenId] = address(0);
+            _burn(tokenId);
+        }
     }
 }
