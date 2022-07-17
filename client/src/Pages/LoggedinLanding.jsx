@@ -3,6 +3,7 @@ import TopBar from "../Components/Account/TopBar";
 import CircularGradient from "../Components/HomePage/CircularGradient";
 import Filters from "../Components/Landing/Filters";
 import Headline from "../Components/Landing/Headline";
+import ProductGrid from "../Components/Landing/ProductGrid";
 import SeachBar from "../Components/Landing/SeachBar";
 const LoggedinLanding = () => {
   return (
@@ -11,6 +12,7 @@ const LoggedinLanding = () => {
       <Headline />
       <SeachBar />
       <Filters />
+      <ProductGrid />
     </div>
   );
 };
