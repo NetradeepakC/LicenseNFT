@@ -10,7 +10,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     using Counters for Counters.Counter;
 
     mapping(string => bool) private existingURIs;
-    mapping(uint256 => uint64) private birthtime;
+    mapping(uint256 => uint256) private birthtime;
     mapping(uint256 => uint24) private lifespan;
 
     constructor() ERC721("License", "License") {}
@@ -26,27 +26,19 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         uint24 day
     ) public onlyRegistered returns (uint256) {
         require(!existingURIs[uri], "URI already in use.");
-        uint256 tokenId = 0;
-        uint256 i;
-        for (i = 16; i >= 1; i--) {
-            tokenId = (tokenId << 16) + seeds[i - 1];
-        }
+        uint256 tokenId = combine(seeds);
         addSerial(tokenId);
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
         pass = tokenId;
-        birthtime[tokenId] = uint64(block.timestamp);
+        birthtime[tokenId] = block.timestamp;
         lifespan[tokenId] = day;
         return tokenId;
     }
 
-    function safeBurn(uint16[] memory seeds) public {
-        uint256 tokenId = 0;
-        for (uint256 i = seeds.length; i >= 1; i--) {
-            tokenId = (tokenId << 16) + seeds[i - 1];
-        }
-        _safeBurn(tokenId);
+    function safeBurn(uint16[] memory parts) public {
+        _safeBurn(combine(parts));
     }
 
     function _safeBurn(uint256 tokenId) internal onlyMember(tokenId) {
@@ -60,9 +52,10 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         super._burn(tokenId);
     }
 
-    function getTokenURI(uint256 tokenId) public returns (string memory) {
-        uint64 current = uint64(block.timestamp);
-        if ((current - birthtime[tokenId]) / (3600 * 24) < lifespan[tokenId]) {
+    function getTokenURI(uint16[] memory parts) public returns (string memory) {
+        uint256 tokenId = combine(parts);
+        uint256 current = block.timestamp;
+        if ((current - birthtime[tokenId]) < lifespan[tokenId]) {
             return super.tokenURI(tokenId);
         } else {
             birthtime[tokenId] = 0;
@@ -82,7 +75,6 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         returns (string memory)
     {
         require(false, "Incorrent Token string fetcher used");
-        tokenId = 0;
         return "Illegal Access: 1";
     }
 }

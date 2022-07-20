@@ -8,6 +8,14 @@ contract Misc {
         return pass;
     }
 
+    function combine(uint16[] memory arr) internal pure returns (uint256) {
+        uint256 out;
+        for (uint256 i = 16; i >= 1; i--) {
+            out = (out << 16) + arr[i - 1];
+        }
+        return out;
+    }
+
     function uintToString(uint256 v) internal pure returns (string memory) {
         bytes memory reversed = new bytes(100);
         uint256 i;
