@@ -31,7 +31,7 @@ contract Misc {
     }
 
     function concatenate(string memory a, string memory b)
-        public
+        internal
         pure
         returns (string memory)
     {
