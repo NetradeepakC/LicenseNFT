@@ -1,28 +1,53 @@
 import React from "react";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import {
+  loadWeb3,
+  loadAccount,
+  getUser,
+  registerUser,
+} from "../../Services/web3";
 export default function NavBar() {
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
+  // const [errorMessage, setErrorMessage] = useState(null);
+  // const [defaultAccount, setDefaultAccount] = useState(null);
   const router = useNavigate();
-  const connectWalletHandler = () => {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then((result) => {
-          accountChangedHandler(result[0]);
-          router("/landing");
-        });
-    } else {
-      window.alert(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
+  const [wallet, setWallet] = useState("");
+  const [name, setName] = useState("");
+
+  const register = async (event) => {
+    event.preventDefault();
+    await loadWeb3();
+    const account = await loadAccount();
+    setWallet(account);
+
+    const result = await registerUser(name);
+    if (result) {
+      const userData = await getUser(account);
+      if (userData.id === 0) {
+        window.alert("Something Went Wrong!");
+        return;
+      }
+      router.push("/landing", { state: { user: userData, wallet: wallet } });
+      window.location.reload();
     }
   };
-  const accountChangedHandler = (newAccount) => {
-    setDefaultAccount(newAccount);
-  };
+  // const connectWalletHandler = () => {
+  //   if (window.ethereum) {
+  //     window.ethereum
+  //       .request({ method: "eth_requestAccounts" })
+  //       .then((result) => {
+  //         accountChangedHandler(result[0]);
+  //         router("/landing");
+  //       });
+  //   } else {
+  //     window.alert(
+  //       "Non-Ethereum browser detected. You should consider trying MetaMask!"
+  //     );
+  //   }
+  // };
+  // const accountChangedHandler = (newAccount) => {
+  //   setDefaultAccount(newAccount);
+  // };
 
   return (
     <nav>
