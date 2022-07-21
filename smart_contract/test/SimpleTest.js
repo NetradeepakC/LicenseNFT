@@ -10,6 +10,7 @@ contract("License",()=>{
         var metadataURI2 = 'cid/test2.png';
         const license = await License.new();
         //console.log(accounts);
+        await license.addUser("User1",accounts[0], {from: accounts[0]});
         var License1;
         while(true){
             try{
@@ -18,7 +19,7 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                await license.mint(accounts[1], temp, metadataURI, 2, {from: accounts[0]});
+                await license.mint("Item1",accounts[1], temp, metadataURI, 2, {from: accounts[0]});
                 break;
             }
             catch(err){
@@ -32,7 +33,7 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                await license.mint(accounts[1], temp, metadataURI2, 2, {from: accounts[0]});
+                await license.mint("Item1",accounts[1], temp, metadataURI2, 2, {from: accounts[0]});
                 break;
             }
             catch(err){
