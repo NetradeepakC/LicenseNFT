@@ -13,7 +13,7 @@ export default function MainContent() {
   };
 
   return (
-    <div className="grid grid-cols-2 text-white mx-auto w-3/4">
+    <div className="lg:grid grid-cols-2 text-white mx-auto w-3/4">
       <div className="h-1/2 p-10">
         <img src={bird} alt="I am a bird" />
       </div>
