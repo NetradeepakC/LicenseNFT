@@ -32,7 +32,7 @@ export const loadWeb3 = async () => {
   export const registerUser = async () => {
     const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
-    const result = await instance.methods.addMember(account)
+    const result = await instance.methods.addUser("hello1",account,false)
     .send({
       from: account,
     }); 
