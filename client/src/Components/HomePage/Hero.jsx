@@ -49,7 +49,7 @@ const Hero = (props) => {
       console.log("Success");
       jsx = (
         <>
-          <div className="mr-auto place-self-center lg:col-span-7">
+          <div className="lg:mr-auto place-self-center lg:col-span-7">
             <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white font-poppins">
               Discover a new era of
               {" " + item.heading}
@@ -76,7 +76,7 @@ const Hero = (props) => {
   return (
     <div>
       <div classname="Hero">
-        <section className="w-full mx-12">
+        <section className="w-full lg:mx-12">
           <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             {jsx}
           </div>
