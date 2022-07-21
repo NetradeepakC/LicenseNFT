@@ -1,6 +1,35 @@
 import React from "react";
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import {
+  loadWeb3,
+  getUser,
+  registerUser,
+  loadAccount,
+} from "../../Services/web3";
 
 const Hero = (props) => {
+  const router = useNavigate();
+  const [wallet, setWallet] = useState("");
+  const [name, setName] = useState("");
+
+  const register = async (event) => {
+    event.preventDefault();
+    await loadWeb3();
+    const account = await loadAccount();
+    setWallet(account);
+
+    const result = await registerUser();
+    if (result) {
+      const userData = await getUser(account);
+      if (userData.id === 0) {
+        window.alert("Something Went Wrong!");
+        return;
+      }
+      router.push("/landing");
+      window.location.reload();
+    }
+  };
   const typeOfUser = [
     {
       type: "customer",
@@ -28,24 +57,10 @@ const Hero = (props) => {
             <p className="max-w-2xl mb-6 font-light text-white lg:mb-8 md:text-lg lg:text-xl dark:text-paraColor font-poppins">
               {item.description}
             </p>
-            <a
-              href="#"
-              className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-btnColor hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
-            >
+
+            <button className="bg-btnColor" onClick={register}>
               Get started
-              <svg
-                className="w-5 h-5 ml-2 -mr-1"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
+            </button>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
             <img

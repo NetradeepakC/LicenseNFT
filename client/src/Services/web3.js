@@ -1,5 +1,8 @@
 //Login Logout Init
-import { License_ABI } from "./ABI/License";
+import { contractABI , licenseContract} from "./ABI/constants";
+
+import Web3 from "web3"
+
 export const loadWeb3 = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
@@ -12,20 +15,64 @@ export const loadWeb3 = async () => {
       );
     }
   };
-export const web3 = new Web3(Web3.givenProvider);
-
-export const loadAccount = async () => {
-  const accounts = await web3.eth.getAccounts();
-  const account = accounts[0];
-  return account;
-};
-//Contracts init 
-const WarrantyNFT_contract = new web3.eth.Contract(
-    License_ABI
+  
+  export const web3 =  new Web3(Web3.givenProvider);
+  
+  export const loadAccount = async () => {
+    const accounts = await web3.eth.getAccounts();
+    const account = accounts[0];
+    return account;
+  };
+  const networkID = await web3.eth.net.getId();
+  const deployedNetwork = licenseContract.networks[networkID];
+  const instance = new web3.eth.Contract(
+    licenseContract.abi,deployedNetwork&&deployedNetwork.address
   );
+  
+  export const registerUser = async () => {
+    const accounts = await web3.eth.getAccounts();
+    const account = accounts[0];
+    console.log(licenseContract.abi)
+    const result = await instance.methods.addMember(account)
+    .send({
+      from: account,
+    });
+    return result;
+  };
+  export const getUser = async (address) => {
+    // Optional parameter
+    if (address === undefined) {
+      const accounts = await web3.eth.getAccounts();
+      address = accounts[0];
+    }
+  
+    try {
+      const user = await instance.methods.getBoughtLicenses(address).call();
+      console.log(user)
+      return user;
+    }
+    catch (err) {
+      window.alert("User does not exist");
+      window.location.reload();
+    };
+  };
+
+// let provider = new ethers.providers.Web3Provider(web3.givenProvider);
+// let deth = new ethers.Contract(
+//   contractAddress,
+//   contractABI,
+//   provider
+// );
+// console.log('contract address', contract.address);
+// await contract.deployTransaction.wait();
 
 
-//Account related
+// export const registerUser = async () => {  
+//   console.log(contractABI.methods)
+//   const contract = new ethers.Contract(contractAddress, contractABI, signer);
+//   const tx = await contract.addMember('0x162bC5Fbe704703CEa8e222D2b77cbf82D9d351A');
+
+// };
 
 // export const getUser = async (address) => {
 //     // Optional parameter
@@ -35,8 +82,10 @@ const WarrantyNFT_contract = new web3.eth.Contract(
 //     }
   
 //     try {
-//       const user = await WarrantyNFT_contract.methods.addrToUser(address).call();
-//       return user;
+//       // const user = await WarrantyNFT_contract.methods.addrToUser(address).call();
+//       const contract = new ethers.Contract(contractAddress, abi, provider);
+//       const value = await contract.getValue(address);
+//       return value;
 //     }
 //     catch (err) {
 //       window.alert("User does not exist");

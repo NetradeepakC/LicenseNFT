@@ -66,7 +66,7 @@ contract Whitelist is Ownable, Misc {
         serialUserMap[serial] = to;
     }
 
-    function addMember(address _member) public onlyCreator {
+    function addMember(address _member) public {
         require(!usedBrandIDs[_member], "Address already registered");
         usedBrandIDs[_member] = true;
     }
