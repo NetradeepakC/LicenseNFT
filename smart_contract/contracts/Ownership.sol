@@ -13,29 +13,11 @@ contract Whitelist is Ownable, Misc {
     mapping(uint256 => bool) internal usedSerials;
     mapping(uint256 => address) internal serialBrandMap;
     mapping(uint256 => address) internal serialUserMap;
-    mapping(address => bool) private creator;
     mapping(address => uint256[]) internal userSerialMap;
     mapping(address => uint256[]) internal brandSerialMap;
 
     constructor() {
         usedBrandIDs[msg.sender] = true;
-        creator[msg.sender] = true;
-    }
-
-    modifier onlyCreator() {
-        require(
-            creator[msg.sender],
-            "Function accessible only by the member of the brand!!"
-        );
-        _;
-    }
-
-    modifier senderIsHolder(address _add) {
-        require(
-            msg.sender == _add,
-            "Only the owner of this address can see it's details"
-        );
-        _;
     }
 
     modifier onlyMember(uint256 serial) {
@@ -62,28 +44,19 @@ contract Whitelist is Ownable, Misc {
         usedSerials[serial] = true;
         serialBrandMap[serial] = msg.sender;
         brandSerialMap[msg.sender].push(serial);
-        userSerialMap[to].push(serial);
         serialUserMap[serial] = to;
     }
 
-    function addMember(address _member) public onlyCreator {
+    function addMember(address _member) public {
         require(!usedBrandIDs[_member], "Address already registered");
         usedBrandIDs[_member] = true;
     }
 
-    function getBoughtLicenses(address _user)
-        public
-        senderIsHolder(_user)
-        returns (uint256[] memory)
-    {
-        return userSerialMap[_user];
+    function getBoughtLicenses() public view returns (uint256[] memory) {
+        return userSerialMap[msg.sender];
     }
 
-    function getIssuedLicense(address _user)
-        public
-        senderIsHolder(_user)
-        returns (uint256[] memory)
-    {
-        return brandSerialMap[_user];
+    function getIssuedLicense() public view returns (uint256[] memory) {
+        return brandSerialMap[msg.sender];
     }
 }

@@ -77,9 +77,12 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         super._burn(tokenId);
     }
 
-    function getTokenURI(uint16[] memory parts) public {
-        uint256 tokenId = combine(parts);
-        pass_str = tokenURI(tokenId);
+    function getTokenURI(uint16[] memory parts)
+        public
+        view
+        returns (string memory)
+    {
+        return tokenURI(combine(parts));
     }
 
     function tokenURI(uint256 tokenId)
