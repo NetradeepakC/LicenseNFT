@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { loadWeb3, getUser, loadAccount } from "../../Services/web3";
 
 export default function NavBar() {
+  const router = useNavigate();
   const [wallet, setWallet] = useState("");
   const connect = async (event) => {
     event.preventDefault();
@@ -12,8 +13,9 @@ export default function NavBar() {
     setWallet(account);
 
     const userData = await getUser(account);
+    console.log(userData);
     if (userData != null) {
-      router.push("/landing");
+      router("/landing");
       window.location.reload();
     } else {
       window.alert("Account does not exist. Please register!");

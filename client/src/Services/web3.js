@@ -32,11 +32,10 @@ export const loadWeb3 = async () => {
   export const registerUser = async () => {
     const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
-    console.log(licenseContract.abi)
     const result = await instance.methods.addMember(account)
     .send({
       from: account,
-    });
+    }); 
     return result;
   };
   export const getUser = async (address) => {
@@ -47,13 +46,13 @@ export const loadWeb3 = async () => {
     }
   
     try {
-      const user = await instance.methods.getBoughtLicenses(address).call();
+      const user = await instance.methods.getBoughtLicenses();
       console.log(user)
       return user;
     }
     catch (err) {
-      window.alert("User does not exist");
-      window.location.reload();
+      window.alert(err);
+      // window.location.reload();
     };
   };
 
