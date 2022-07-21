@@ -18,8 +18,7 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                License1=(await BigNumber(await license.mint(accounts[1], temp, metadataURI, 2, {from: accounts[0]})));
-                console.log(License1.toString());
+                await license.mint(accounts[1], temp, metadataURI, 2, {from: accounts[0]});
                 break;
             }
             catch(err){
@@ -33,28 +32,25 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                License1=(await BigNumber(await license.mint(accounts[1], temp, metadataURI2, 2, {from: accounts[0]})));
-                console.log(License1.toString());
+                await license.mint(accounts[1], temp, metadataURI2, 2, {from: accounts[0]});
                 break;
             }
             catch(err){
                 console.log(err);
             }
         }
-        License1=(await BigNumber(await license.getUINT256()));
-        console.log(await License1.toNumber());
-        temp=await MiscMath.split16(License1);
-        console.log(temp);
         // console.log("Timer start");
         // await new Promise(r => setTimeout(r, 4000));
         // console.log("Timer end");
-        console.log(await license.getTokenURI(temp));
         var arr=await license.getBoughtLicenses({from: accounts[1]});
         for(var i=0;i<arr.length;i++){
             arr[i]=await BigNumber(arr[i]);
             console.log(await arr[i].toNumber());
             console.log(i);
         }
+        temp=await MiscMath.split16(arr[arr.length-1]);
+        console.log(temp);
+        console.log(await license.getTokenURI(temp));
         // console.log(await license.tokenURI(await license.getUINT256()));
         // await license.safeBurn(MiscMath.split16(License1),{from: accounts[0]});
         // await license.addMember(accounts[1], {from: accounts[0]});

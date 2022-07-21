@@ -2,12 +2,6 @@
 pragma solidity ^0.8.4;
 
 contract Misc {
-    uint256 internal pass_uint;
-
-    function getUINT256() public view returns (uint256) {
-        return pass_uint;
-    }
-
     function combine(uint16[] memory arr) internal pure returns (uint256) {
         uint256 out;
         for (uint256 i = 16; i >= 1; i--) {
