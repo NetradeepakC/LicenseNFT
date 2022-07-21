@@ -30,7 +30,8 @@ contract("License",()=>{
         // console.log("Timer start");
         // await new Promise(r => setTimeout(r, 4000));
         // console.log("Timer end");
-        console.log(await license.getTokenURI(temp));
+        await license.getTokenURI(temp)
+        console.log(await license.getSTR());
         // console.log(await license.tokenURI(await license.getUINT256()));
         // await license.safeBurn(MiscMath.split16(License1),{from: accounts[0]});
         // await license.addMember(accounts[1], {from: accounts[0]});

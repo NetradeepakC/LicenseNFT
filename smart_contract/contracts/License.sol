@@ -31,7 +31,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
-        pass = tokenId;
+        pass_uint = tokenId;
         lifespan[tokenId] = day;
         birthtime[tokenId] = uint64(block.timestamp);
         return tokenId;
@@ -77,9 +77,9 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         super._burn(tokenId);
     }
 
-    function getTokenURI(uint16[] memory parts) public returns (string memory) {
+    function getTokenURI(uint16[] memory parts) public {
         uint256 tokenId = combine(parts);
-        return tokenURI(tokenId);
+        pass_str = tokenURI(tokenId);
     }
 
     function tokenURI(uint256 tokenId)
