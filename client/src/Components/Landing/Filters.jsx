@@ -3,6 +3,7 @@ import {
   issueNFT,
   loadAccount,
   retrieveBoughtNFT,
+  getProduct,
   web3,
 } from "../../Services/web3";
 
@@ -11,7 +12,9 @@ const Filters = () => {
     const acc = await loadAccount(0);
     console.log(acc);
     const res = await retrieveBoughtNFT(acc);
-    console.log(res);
+    //loop lagake res[i] will give all object
+    const res2 = await getProduct(acc, res[0]);
+    console.log(res2);
   };
   return (
     <div className="flex flex-row-reverse flex-wrap mr-48 gap-5">

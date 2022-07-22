@@ -6,8 +6,10 @@ import Headline from "../Components/Landing/Headline";
 import ProductGrid from "../Components/Landing/ProductGrid";
 import SeachBar from "../Components/Landing/SeachBar";
 import { useLocation } from "react-router-dom";
+
 const LoggedinLanding = () => {
   const location = useLocation();
+  //const [data, setData] = useState(null);
   const typeOfUser = location.state.userType;
   console.log(typeOfUser);
   return (
