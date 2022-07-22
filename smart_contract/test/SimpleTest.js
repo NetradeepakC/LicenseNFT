@@ -10,8 +10,10 @@ contract("License",()=>{
         var metadataURI2 = 'cid/test2.png';
         const license = await License.new();
         //console.log(accounts);
+        //await license.isRegistered();
         await license.addUser("User1",accounts[0], true, {from: accounts[0]});
-        await license.isRegistered();
+        await license.addUser("User2",accounts[1], true, {from: accounts[1]});
+        console.log(await license.getName());
         var License1;
         while(true){
             try{
@@ -20,7 +22,8 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                await license.mint("Item1",accounts[1], temp, metadataURI, 2, {from: accounts[0]});
+                await license.mint("Item1",accounts[1], temp, metadataURI, 5, {from: accounts[0]});
+                console.log(await license.getTime());
                 break;
             }
             catch(err){
@@ -34,23 +37,24 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                await license.mint("Item1",accounts[1], temp, metadataURI2, 2, {from: accounts[0]});
+                await license.mint("Item1",accounts[1], temp, metadataURI2, 5, {from: accounts[0]});
+                console.log(await license.getTime());
                 break;
             }
             catch(err){
                 console.log(err);
             }
         }
-        console.log("Timer start");
-        await new Promise(r => setTimeout(r, 4000));
-        console.log("Timer end");
+        // console.log("Timer start");
+        // await new Promise(r => setTimeout(r, 10000));
+        // console.log("Timer end");
         var arr=await license.getBoughtLicenses({from: accounts[1]});
         for(var i=0;i<arr.length;i++){
             arr[i]=await BigNumber(arr[i]);
             console.log(await arr[i].toNumber());
             console.log(i);
         }
-        temp=await MiscMath.split16(arr[arr.length-1]);
+        temp=await MiscMath.split16(arr[0]);
         console.log(temp);
         console.log(await license.getTokenURI(temp));
         // console.log(await license.tokenURI(await license.getUINT256()));

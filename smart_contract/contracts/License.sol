@@ -17,6 +17,12 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     //     return "ipfs://";
     // }
 
+    uint256 public time;
+
+    function getTime() public view returns (string memory) {
+        return uintToString(time);
+    }
+
     function mint(
         string memory name,
         address to,
@@ -24,6 +30,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         string memory uri,
         uint24 day
     ) public onlyRegistered onlySellar(msg.sender) {
+        require(usedBrandIDs[to], "Only registered members allowed");
         require(!existingURIs[uri], "URI already in use.");
         uint256 tokenId = combine(seeds);
         addSerial(tokenId);
@@ -37,6 +44,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             uint64(block.timestamp),
             day
         );
+        time = block.timestamp;
     }
 
     function safeBurn(uint16[] memory parts) internal {
@@ -81,10 +89,18 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         );
         uint64 current = uint64(block.timestamp);
         if (
-            (current - serialProductMap[tokenId].birthtime) / (24 * 3600) <
+            (current - serialProductMap[tokenId].birthtime) <
             serialProductMap[tokenId].lifespan
         ) {
-            return super.tokenURI(tokenId);
+            //return super.tokenURI(tokenId);
+            return
+                concatenate(
+                    uintToString(current),
+                    concatenate(
+                        " ",
+                        uintToString(serialProductMap[tokenId].birthtime)
+                    )
+                );
         } else {
             require(false, "License is already expired");
         }
