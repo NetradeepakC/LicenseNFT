@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bignumber.js": "^9.0.2",
     "browserify-zlib": "^0.2.0",
     "ethers": "^5.6.9",
     "events": "^3.3.0",

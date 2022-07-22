@@ -1,7 +1,8 @@
 //Login Logout Init
 import { contractABI , licenseContract} from "./ABI/constants";
-
+import {getRandom16,split16} from "./MiscMath"
 import Web3 from "web3"
+import BigNumber from "bignumber.js";
 
 export const loadWeb3 = async () => {
     if (window.ethereum) {
@@ -36,6 +37,7 @@ export const loadWeb3 = async () => {
   export const registerUser = async (name,isSeller) => {
     const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
+    console.log(account);
     const result = await instance.methods.addUser(name,account,isSeller)
     .send({
       from: account,
@@ -48,9 +50,10 @@ export const loadWeb3 = async () => {
       const accounts = await web3.eth.getAccounts();
       address = accounts[0];
     }
-    try {
-        const user = await instance.methods.isRegistered().call();
-        const name = await instance.methods.getName().call();
+    try {  
+        console.log(address)     
+        await instance.methods.isRegistered().call({from:address,});
+        const name = await instance.methods.getName().call({from:address,});
         return name ;
       }
       catch (err) {
@@ -60,6 +63,45 @@ export const loadWeb3 = async () => {
     
    
   };
+  export const issueNFT = async()=>{
+    const accounts = await web3.eth.getAccounts();
+    const account = accounts[0];
+    try{
+      var temp=[];
+    for(let i=0;i<16;i++){
+      temp.push(getRandom16());
+    }
+    console.log(temp);
+          
+   await instance.methods.mint("nirodh","0x5f1Ea84832A7E264682bF9CeeC2DACcB46D23754",temp,"69421",1).send({from:account,});
+  }
+  catch (err) {
+      window.alert(err);
+      // window.location.reload();
+    };
+
+
+  }
+  export const retrieveNFT = async(account)=>{
+   // try {
+      const arr = await instance.methods.getBoughtLicenses().call({from:account,});
+      console.log(arr)
+      for(var i=0;i<arr.length;i++){
+        arr[i]=await BigNumber(arr[i]);
+        console.log(await arr[i].toNumber());
+        console.log(i);
+    }
+    var temp=await split16(arr[arr.length-1]);
+    console.log(temp);
+    console.log(await license.getTokenURI(temp));
+    return temp ;
+    //}
+    // catch (err) {
+    //   window.alert(err);
+    //   // window.location.reload();
+    // };
+
+  }
 
 // let provider = new ethers.providers.Web3Provider(web3.givenProvider);
 // let deth = new ethers.Contract(

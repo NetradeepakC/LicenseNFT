@@ -28,7 +28,7 @@ const Register = () => {
     console.log(result);
     if (result) {
       const userData = await getUser(account);
-      if (userData.id === 0) {
+      if (userData == null) {
         window.alert("Something Went Wrong!");
         return;
       }
