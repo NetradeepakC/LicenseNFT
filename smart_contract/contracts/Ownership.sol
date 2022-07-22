@@ -55,7 +55,7 @@ contract Whitelist is Ownable, Misc {
         _;
     }
 
-    function addSerial(uint256 serial) public onlySellar {
+    function addSerial(uint256 serial) public onlySellar(msg.sender) {
         require(
             !usedSerials[serial],
             concatenate(
@@ -103,7 +103,5 @@ contract Whitelist is Ownable, Misc {
         addressUserMap[msg.sender].isSellar = false;
     }
 
-    function isRegistered() public view onlyRegistered {
-        return true;
-    }
+    function isRegistered() public view onlyRegistered {}
 }
