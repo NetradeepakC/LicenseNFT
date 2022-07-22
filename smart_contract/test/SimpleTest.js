@@ -11,6 +11,7 @@ contract("License",()=>{
         const license = await License.new();
         //console.log(accounts);
         await license.addUser("User1",accounts[0], true, {from: accounts[0]});
+        await license.isRegistered();
         var License1;
         while(true){
             try{

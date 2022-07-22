@@ -78,6 +78,18 @@ contract Whitelist is Ownable, Misc {
         addressUserMap[_member] = user(name, temp1, temp2, isSellar);
     }
 
+    function getName() public view returns (string memory) {
+        return addressUserMap[msg.sender].name;
+    }
+
+    function getProduct(uint16[] memory parts)
+        public
+        view
+        returns (product memory)
+    {
+        return serialProductMap[combine(parts)];
+    }
+
     function getBoughtLicenses() public view returns (uint256[] memory) {
         return addressUserMap[msg.sender].boughtList;
     }
