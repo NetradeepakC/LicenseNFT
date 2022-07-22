@@ -2,13 +2,9 @@
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "./Misc.sol";
 
 contract Whitelist is Ownable, Misc {
-    using Counters for Counters.Counter;
-    Counters.Counter private _SerialIds;
-
     mapping(address => bool) internal usedBrandIDs;
     mapping(uint256 => bool) internal usedSerials;
     mapping(address => user) internal addressUserMap;
@@ -27,6 +23,7 @@ contract Whitelist is Ownable, Misc {
 
     struct product {
         string name;
+        uint256 serialID;
         address sellar;
         address[] ownerList;
         uint64 birthtime;

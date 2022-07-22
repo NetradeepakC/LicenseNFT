@@ -25,6 +25,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
 
     function mint(
         string memory name,
+        uint256 serialID,
         address to,
         uint16[] memory seeds,
         string memory uri,
@@ -39,6 +40,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         existingURIs[uri] = true;
         serialProductMap[tokenId] = product(
             name,
+            serialID,
             msg.sender,
             null_add_arr,
             uint64(block.timestamp),
