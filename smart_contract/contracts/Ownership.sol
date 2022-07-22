@@ -55,7 +55,7 @@ contract Whitelist is Ownable, Misc {
         _;
     }
 
-    function addSerial(uint256 serial) public onlyRegistered {
+    function addSerial(uint256 serial) public onlySellar {
         require(
             !usedSerials[serial],
             concatenate(
@@ -96,6 +96,14 @@ contract Whitelist is Ownable, Misc {
     }
 
     function kickSellar() public {
+        require(
+            addressUserMap[msg.sender].soldList.length == 0,
+            "All licenses need to expire before leaving the business"
+        );
         addressUserMap[msg.sender].isSellar = false;
+    }
+
+    function isRegistered() public view onlyRegistered {
+        return true;
     }
 }

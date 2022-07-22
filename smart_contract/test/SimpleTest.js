@@ -10,7 +10,7 @@ contract("License",()=>{
         var metadataURI2 = 'cid/test2.png';
         const license = await License.new();
         //console.log(accounts);
-        await license.addUser("User1",accounts[0], {from: accounts[0]});
+        await license.addUser("User1",accounts[0], true, {from: accounts[0]});
         var License1;
         while(true){
             try{
@@ -40,9 +40,9 @@ contract("License",()=>{
                 console.log(err);
             }
         }
-        // console.log("Timer start");
-        // await new Promise(r => setTimeout(r, 4000));
-        // console.log("Timer end");
+        console.log("Timer start");
+        await new Promise(r => setTimeout(r, 4000));
+        console.log("Timer end");
         var arr=await license.getBoughtLicenses({from: accounts[1]});
         for(var i=0;i<arr.length;i++){
             arr[i]=await BigNumber(arr[i]);
