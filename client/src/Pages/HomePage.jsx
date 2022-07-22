@@ -5,9 +5,10 @@ import FeatureBox from "../Components/HomePage/FeatureBox";
 import ForBox from "../Components/HomePage/ForBox";
 import Footer from "../Components/HomePage/Footer";
 import NavBar from "../Components/HomePage/NavBar";
+
 const HomePage = (props) => {
   var name = props.typeOfLogin == "customer" ? "customer" : "company";
-  console.log(name);
+
   return (
     <div className="bg-mainBg flex flex-wrap flex-col">
       <NavBar />

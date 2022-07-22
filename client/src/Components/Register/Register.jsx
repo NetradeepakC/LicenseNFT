@@ -1,8 +1,38 @@
 import React from "react";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  loadWeb3,
+  getUser,
+  registerUser,
+  loadAccount,
+} from "../../Services/web3";
 
 const Register = () => {
   const [name, setName] = useState("");
+  const location = useLocation();
+  const typeOfUser = location.state.userType;
+  const router = useNavigate();
+  const [wallet, setWallet] = useState("");
+
+  const register = async (event, typeOfUser) => {
+    event.preventDefault();
+    await loadWeb3();
+    const account = await loadAccount();
+    setWallet(account);
+    var isSeller = typeOfUser === "customer" ? false : true;
+    const result = await registerUser(name, isSeller);
+    console.log(result);
+    if (result) {
+      const userData = await getUser(account);
+      if (userData.id === 0) {
+        window.alert("Something Went Wrong!");
+        return;
+      }
+      router("/landing", { state: { userType: typeOfUser } });
+      window.location.reload();
+    }
+  };
 
   return (
     <>
@@ -21,7 +51,12 @@ const Register = () => {
             placeholder="Username"
           />
         </form>
-        <button className="text-white bg-btnColor rounded-2xl mx-auto px-3 my-5 py-3 hover:font-bold ">
+        <button
+          className="text-white bg-btnColor rounded-2xl mx-auto px-3 my-5 py-3 hover:font-bold "
+          onClick={(e) => {
+            register(e, typeOfUser);
+          }}
+        >
           Submit
         </button>
         <h1 className="mx-auto font-poppins font-bold text-2xl my-10">

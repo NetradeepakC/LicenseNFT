@@ -1,35 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import {
-  loadWeb3,
-  getUser,
-  registerUser,
-  loadAccount,
-} from "../../Services/web3";
 
 const Hero = (props) => {
   const router = useNavigate();
-  const [wallet, setWallet] = useState("");
-  const [name, setName] = useState("");
 
-  const register = async (event) => {
-    event.preventDefault();
-    await loadWeb3();
-    const account = await loadAccount();
-    setWallet(account);
-
-    const result = await registerUser();
-    if (result) {
-      const userData = await getUser(account);
-      if (userData.id === 0) {
-        window.alert("Something Went Wrong!");
-        return;
-      }
-      router.push("/landing");
-      window.location.reload();
-    }
-  };
   const typeOfUser = [
     {
       type: "customer",
@@ -58,8 +33,13 @@ const Hero = (props) => {
               {item.description}
             </p>
 
-            <button className="bg-btnColor" onClick={register}>
-              Get started
+            <button
+              className="bg-btnColor text-white font-poppins lg:mr-64 px-6 py-4 content-center rounded-2xl"
+              onClick={() => {
+                router("/register", { state: { userType: item.type } });
+              }}
+            >
+              Register
             </button>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">

@@ -29,10 +29,10 @@ export const loadWeb3 = async () => {
     licenseContract.abi,deployedNetwork&&deployedNetwork.address
   );
   
-  export const registerUser = async () => {
+  export const registerUser = async (name,isSeller) => {
     const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
-    const result = await instance.methods.addUser("hello1",account,false)
+    const result = await instance.methods.addUser(name,account,isSeller)
     .send({
       from: account,
     }); 
