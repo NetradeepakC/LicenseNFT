@@ -16,7 +16,7 @@ export const split16 = function(bgn) {
 export const split16arr =function(bgn) {
     var split_list=[];
     for(var i=0;i<bgn.length;i++){
-        split_list.push(split16(bgn[i]));
+        split_list.push(split16(BigNumber(bgn[i])));
     }
     return split_list;
 }

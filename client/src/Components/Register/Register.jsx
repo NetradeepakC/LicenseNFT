@@ -21,20 +21,19 @@ const Register = () => {
     var isSeller = typeOfUser === "customer" ? false : true;
     console.log(isSeller);
     await loadWeb3();
-    const account = await loadAccount();
+    const account = await loadAccount(0);
     setWallet(account);
-
-    const result = await registerUser(name, isSeller);
+    console.log(account);
+    const result = await registerUser(name, account, isSeller);
     console.log(result);
-    if (result) {
-      const userData = await getUser(account);
-      if (userData == null) {
-        window.alert("Something Went Wrong!");
-        return;
-      }
-      router("/landing", { state: { userType: typeOfUser } });
-      window.location.reload();
+
+    const userData = await getUser(account);
+    if (userData == null) {
+      window.alert("Something Went Wrong!");
+      return;
     }
+    router("/landing", { state: { userType: typeOfUser } });
+    window.location.reload();
   };
 
   return (

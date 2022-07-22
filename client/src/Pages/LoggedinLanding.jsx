@@ -12,7 +12,7 @@ const LoggedinLanding = () => {
   console.log(typeOfUser);
   return (
     <div className=" bg-mainBg flex flex-wrap flex-col text-white gap-5 ">
-      <TopBar type="landing" />
+      <TopBar type="landing" user={typeOfUser} />
       <Headline />
       <SeachBar />
       <Filters />

@@ -9,7 +9,7 @@ export default function NavBar(props) {
   const connect = async (event) => {
     event.preventDefault();
     await loadWeb3();
-    const account = await loadAccount();
+    const account = await loadAccount(0);
     setWallet(account);
 
     const userData = await getUser(account);
