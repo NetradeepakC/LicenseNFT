@@ -89,18 +89,10 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         );
         uint64 current = uint64(block.timestamp);
         if (
-            (current - serialProductMap[tokenId].birthtime) <
+            (current - serialProductMap[tokenId].birthtime) / (24 * 3600) <
             serialProductMap[tokenId].lifespan
         ) {
-            //return super.tokenURI(tokenId);
-            return
-                concatenate(
-                    uintToString(current),
-                    concatenate(
-                        " ",
-                        uintToString(serialProductMap[tokenId].birthtime)
-                    )
-                );
+            return super.tokenURI(tokenId);
         } else {
             require(false, "License is already expired");
         }

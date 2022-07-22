@@ -1,8 +1,7 @@
 //Login Logout Init
 import { contractABI , licenseContract} from "./ABI/constants";
-import {getRandom16,split16} from "./MiscMath"
+import {getRandom16,split16, split16arr} from "./MiscMath"
 import Web3 from "web3"
-import BigNumber from "bignumber.js";
 
 export const loadWeb3 = async () => {
     if (window.ethereum) {
@@ -26,46 +25,54 @@ export const loadWeb3 = async () => {
     licenseContract.abi,deployedNetwork&&deployedNetwork.address
   );
   
-  export const loadAccount = async () => {
+  export const loadAccount = async (i) => {
+    try{
     const accounts = await web3.eth.getAccounts();
-    const account = accounts[0];
-   
-    
+    const account = accounts[i];
     return account;
+    }
+      catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
   };
 
-  export const registerUser = async (name,isSeller) => {
-    const accounts = await web3.eth.getAccounts();
-    const account = accounts[0];
-    console.log(account);
-    const result = await instance.methods.addUser(name,account,isSeller)
+  export const getTokenURI=async (account, parts)=>{
+    try{
+    const result=await instance.methods.getTokenURI(parts);
+    return result;
+    }
+      catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  }
+
+  export const registerUser = async (name, account, isSeller) => {
+    try {
+    await instance.methods.addUser(name, account, isSeller)
     .send({
       from: account,
     }); 
-    return result;
-  };
-  export const getUser = async (address) => {
-    // Optional parameter
-    if (address === undefined) {
-      const accounts = await web3.eth.getAccounts();
-      address = accounts[0];
     }
-    try {  
-        console.log(address)     
-        await instance.methods.isRegistered().call({from:address,});
-        const name = await instance.methods.getName().call({from:address,});
-        return name ;
-      }
       catch (err) {
-        window.alert(err);
-        window.location.reload();
-      };
-    
-   
+      window.alert(err);
+      window.location.reload();
+    };
   };
-  export const issueNFT = async()=>{
-    const accounts = await web3.eth.getAccounts();
-    const account = accounts[0];
+
+  export const getUser = async (address) => {
+    try {   
+      const name = await instance.methods.getName().call({from:address});
+      return name ;
+    }
+      catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  };
+
+  export const issueNFT = async(account)=>{
     try{
       var temp=[];
     for(let i=0;i<16;i++){
@@ -73,34 +80,75 @@ export const loadWeb3 = async () => {
     }
     console.log(temp);
           
-   await instance.methods.mint("nirodh","0x5f1Ea84832A7E264682bF9CeeC2DACcB46D23754",temp,"69421",1).send({from:account,});
+  await instance.methods.mint("nirodh","0x5f1Ea84832A7E264682bF9CeeC2DACcB46D23754",temp,"69421",1).send({from:account});
   }
   catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
-
-
   }
-  export const retrieveNFT = async(account)=>{
-   // try {
-      const arr = await instance.methods.getBoughtLicenses().call({from:account,});
-      console.log(arr)
-      for(var i=0;i<arr.length;i++){
-        arr[i]=await BigNumber(arr[i]);
-        console.log(await arr[i].toNumber());
-        console.log(i);
-    }
-    var temp=await split16(arr[arr.length-1]);
-    console.log(temp);
-    console.log(await license.getTokenURI(temp));
-    return temp ;
-    //}
-    // catch (err) {
-    //   window.alert(err);
-    //   // window.location.reload();
-    // };
 
+  export const retrieveBoughtNFT = async(account)=>{
+    try {
+      const arr = await instance.methods.getBoughtLicenses().call({from:account,});
+      return split16arr(arr);
+    }
+    catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  }
+  
+  export const retrieveIssuedNFT = async(account)=>{
+    try {
+      const arr = await instance.methods.getIssuedLicenses().call({from:account,});
+      return split16arr(arr);
+    }
+    catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  }
+
+  export const getProduct = async(account, tokenId)=>{
+    try {
+      const result = await instance.methods.getProduct(tokenId).call({from:account,});
+      return result;
+    }
+    catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  }
+
+  export const makeSellar = async(account)=>{
+    try{
+      await instance.methods.makeSellar().send({from:account,});
+    }
+    catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  }
+
+  export const kickSellar = async(account)=>{
+    try{
+      await instance.methods.kickSellar().send({from:account,});
+    }
+    catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  }
+
+  export const isRegistered = async(account)=>{
+    try {
+      await instance.methods.isRegistered().call({from:account});
+    }
+    catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
   }
 
 // let provider = new ethers.providers.Web3Provider(web3.givenProvider);

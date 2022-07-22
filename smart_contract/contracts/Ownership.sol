@@ -78,7 +78,7 @@ contract Whitelist is Ownable, Misc {
         addressUserMap[_member] = user(name, temp1, temp2, isSellar);
     }
 
-    function getName() public view returns (string memory) {
+    function getName() public view isRegistered returns (string memory) {
         return addressUserMap[msg.sender].name;
     }
 

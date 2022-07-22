@@ -13,3 +13,10 @@ export const split16 = function(bgn) {
     }
     return split;
 };
+export const split16arr =function(bgn) {
+    var split_list=[];
+    for(var i=0;i<bgn.length;i++){
+        split_list.push(split16(bgn[i]));
+    }
+    return split_list;
+}
