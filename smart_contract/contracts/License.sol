@@ -36,6 +36,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
+        address[] storage null_add_arr = new address[](0);
         serialProductMap[tokenId] = product(
             name,
             serialID,
