@@ -12,7 +12,7 @@ contract Whitelist is Ownable, Misc {
 
     address[] null_add_arr = new address[](0);
     product null_product =
-        product("", address(0), null_add_arr, uint64(0), uint24(0));
+        product("", 0, address(0), null_add_arr, uint64(0), uint24(0));
 
     struct user {
         string name;
@@ -75,7 +75,7 @@ contract Whitelist is Ownable, Misc {
         addressUserMap[_member] = user(name, temp1, temp2, isSellar);
     }
 
-    function getName() public view isRegistered returns (string memory) {
+    function getName() public view onlyRegistered returns (string memory) {
         return addressUserMap[msg.sender].name;
     }
 

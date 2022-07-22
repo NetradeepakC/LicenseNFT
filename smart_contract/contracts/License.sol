@@ -7,8 +7,6 @@ import "./Ownership.sol";
 import "./Misc.sol";
 
 contract License is ERC721, ERC721URIStorage, Whitelist {
-    using Counters for Counters.Counter;
-
     mapping(string => bool) private existingURIs;
 
     constructor() ERC721("License", "License") {}
