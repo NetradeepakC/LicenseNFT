@@ -36,12 +36,11 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
-        address[] memory null_add_arr = new address[](0);
         serialProductMap[tokenId] = product(
             name,
             serialID,
             msg.sender,
-            null_add_arr,
+            new address[](0),
             uint64(block.timestamp),
             day
         );
@@ -54,7 +53,14 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
 
     function _safeBurn(uint256 tokenId) internal {
         usedSerials[tokenId] = false;
-        serialProductMap[tokenId] = null_product;
+        serialProductMap[tokenId] = product(
+            "",
+            0,
+            address(0),
+            new address[](0),
+            uint64(0),
+            uint24(0)
+        );
         _setTokenURI(tokenId, "");
         _burn(tokenId);
     }
@@ -124,6 +130,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     ) internal virtual override {
         if (to != address(0)) {
             addressUserMap[to].boughtList.push(serial);
+            //null_add_arr.push(address(to));
             serialProductMap[serial].ownerList.push(to);
         }
     }

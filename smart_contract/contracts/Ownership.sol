@@ -10,10 +10,6 @@ contract Whitelist is Ownable, Misc {
     mapping(address => user) internal addressUserMap;
     mapping(uint256 => product) internal serialProductMap;
 
-    address[] null_add_arr = new address[](0);
-    product null_product =
-        product("", 0, address(0), null_add_arr, uint64(0), uint24(0));
-
     struct user {
         string name;
         uint256[] boughtList;

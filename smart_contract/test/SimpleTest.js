@@ -22,7 +22,7 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                await license.mint("Item1",accounts[1], temp, metadataURI, 5, {from: accounts[0]});
+                await license.mint("Item1",123,accounts[1], temp, metadataURI, 5, {from: accounts[0]});
                 console.log(await license.getTime());
                 break;
             }
@@ -30,21 +30,21 @@ contract("License",()=>{
                 console.log(err);
             }
         }
-        while(true){
-            try{
-                var temp=[];
-                for(let i=0;i<16;i++){
-                    temp.push(MiscMath.getRandom16());
-                }
-                console.log(temp);
-                await license.mint("Item1",accounts[1], temp, metadataURI2, 5, {from: accounts[0]});
-                console.log(await license.getTime());
-                break;
-            }
-            catch(err){
-                console.log(err);
-            }
-        }
+        // while(true){
+        //     try{
+        //         var temp=[];
+        //         for(let i=0;i<16;i++){
+        //             temp.push(MiscMath.getRandom16());
+        //         }
+        //         console.log(temp);
+        //         await license.mint("Item1",accounts[1], temp, metadataURI2, 5, {from: accounts[0]});
+        //         console.log(await license.getTime());
+        //         break;
+        //     }
+        //     catch(err){
+        //         console.log(err);
+        //     }
+        // }
         // console.log("Timer start");
         // await new Promise(r => setTimeout(r, 10000));
         // console.log("Timer end");
@@ -57,6 +57,7 @@ contract("License",()=>{
         temp=await MiscMath.split16(arr[0]);
         console.log(temp);
         console.log(await license.getTokenURI(temp));
+        console.log(await license.getProduct(temp));
         // console.log(await license.tokenURI(await license.getUINT256()));
         // await license.safeBurn(MiscMath.split16(License1),{from: accounts[0]});
         // await license.addMember(accounts[1], {from: accounts[0]});
