@@ -18,17 +18,21 @@ export const loadWeb3 = async () => {
   
   export const web3 =  new Web3(Web3.givenProvider);
   
-  export const loadAccount = async () => {
-    const accounts = await web3.eth.getAccounts();
-    const account = accounts[0];
-    return account;
-  };
+
   const networkID = await web3.eth.net.getId();
   const deployedNetwork = licenseContract.networks[networkID];
   const instance = new web3.eth.Contract(
     licenseContract.abi,deployedNetwork&&deployedNetwork.address
   );
   
+  export const loadAccount = async () => {
+    const accounts = await web3.eth.getAccounts();
+    const account = accounts[0];
+   
+    
+    return account;
+  };
+
   export const registerUser = async (name,isSeller) => {
     const accounts = await web3.eth.getAccounts();
     const account = accounts[0];
@@ -44,16 +48,17 @@ export const loadWeb3 = async () => {
       const accounts = await web3.eth.getAccounts();
       address = accounts[0];
     }
-  
     try {
-      const user = await instance.methods.getBoughtLicenses();
-      console.log(user)
-      return user;
-    }
-    catch (err) {
-      window.alert(err);
-      // window.location.reload();
-    };
+        const user = await instance.methods.isRegistered().call();
+        const name = await instance.methods.getName().call();
+        return name ;
+      }
+      catch (err) {
+        window.alert(err);
+        window.location.reload();
+      };
+    
+   
   };
 
 // let provider = new ethers.providers.Web3Provider(web3.givenProvider);

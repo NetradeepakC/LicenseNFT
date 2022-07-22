@@ -11,7 +11,7 @@ const HomePage = (props) => {
 
   return (
     <div className="bg-mainBg flex flex-wrap flex-col">
-      <NavBar />
+      <NavBar typeOfLogin={name} />
       <CircularGradient />
       <Hero typeOfLogin={name} />
       <FeatureBox typeOfLogin={name} />
