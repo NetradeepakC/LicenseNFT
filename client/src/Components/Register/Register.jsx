@@ -11,16 +11,19 @@ import {
 const Register = () => {
   const [name, setName] = useState("");
   const location = useLocation();
-  const typeOfUser = location.state.userType;
+  var typeOfUser = location.state.userType;
   const router = useNavigate();
   const [wallet, setWallet] = useState("");
 
   const register = async (event, typeOfUser) => {
     event.preventDefault();
+    console.log(typeOfUser);
+    var isSeller = typeOfUser === "customer" ? false : true;
+    console.log(isSeller);
     await loadWeb3();
     const account = await loadAccount();
     setWallet(account);
-    var isSeller = typeOfUser === "customer" ? false : true;
+
     const result = await registerUser(name, isSeller);
     console.log(result);
     if (result) {
