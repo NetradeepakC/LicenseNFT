@@ -46,7 +46,7 @@ contract("License",()=>{
         //     }
         // }
         console.log("Timer start");
-        await new Promise(r => setTimeout(r, 60000));
+        await new Promise(r => setTimeout(r, 10000));
         console.log("Timer end");
         var arr=await license.getBoughtLicenses({from: accounts[1]});
         for(var i=0;i<arr.length;i++){
@@ -56,7 +56,8 @@ contract("License",()=>{
         }
         temp=await MiscMath.split16(arr[0]);
         console.log(temp);
-        console.log(await license.getTokenURI(temp));
+        await license.setTokenURI(temp);
+        console.log(await license.getTokenURI());
         console.log(await license.getProduct(temp));
         console.log(await license.getOwnerList(temp));
         // console.log(await license.tokenURI(await license.getUINT256()));

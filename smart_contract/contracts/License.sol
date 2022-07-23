@@ -8,6 +8,7 @@ import "./Misc.sol";
 
 contract License is ERC721, ERC721URIStorage, Whitelist {
     mapping(string => bool) private existingURIs;
+    mapping(address => string) internal addressURIMap;
 
     constructor() ERC721("License", "License") {}
 
@@ -47,11 +48,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         time = block.timestamp;
     }
 
-    function safeBurn(uint16[] memory parts) internal {
-        _safeBurn(combine(parts));
-    }
-
-    function _safeBurn(uint256 tokenId) internal {
+    function safeBurn(uint256 tokenId) internal {
         usedSerials[tokenId] = false;
         serialProductMap[tokenId] = product(
             "",
@@ -72,12 +69,21 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         super._burn(tokenId);
     }
 
-    function getTokenURI(uint16[] memory parts)
-        public
-        view
-        returns (string memory)
-    {
-        return tokenURI(combine(parts));
+    function getTokenURI() public view returns (string memory) {
+        return addressURIMap[msg.sender];
+    }
+
+    function setTokenURI(uint16[] memory parts) public returns (string memory) {
+        uint64 current = uint64(block.timestamp);
+        uint256 tokenId = combine(parts);
+        if (
+            (current - serialProductMap[tokenId].birthtime) >=
+            serialProductMap[tokenId].lifespan
+        ) {
+            safeBurn(tokenId);
+            require(false, "License is already expired");
+        }
+        addressURIMap[msg.sender] = tokenURI(tokenId);
     }
 
     function tokenURI(uint256 tokenId)
@@ -101,9 +107,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         ) {
             //return super.tokenURI(tokenId);
             return uintToString(current);
-        } else {
-            require(false, "License is already expired");
         }
+        return "Illegal Access";
     }
 
     function _beforeTokenTransfer(
