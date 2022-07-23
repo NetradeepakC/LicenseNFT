@@ -58,6 +58,7 @@ contract("License",()=>{
         console.log(temp);
         console.log(await license.getTokenURI(temp));
         console.log(await license.getProduct(temp));
+        console.log(await license.getOwnerList(temp));
         // console.log(await license.tokenURI(await license.getUINT256()));
         // await license.safeBurn(MiscMath.split16(License1),{from: accounts[0]});
         // await license.addMember(accounts[1], {from: accounts[0]});

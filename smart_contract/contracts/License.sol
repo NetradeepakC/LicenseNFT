@@ -40,7 +40,6 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             name,
             serialID,
             msg.sender,
-            new address[](0),
             uint64(block.timestamp),
             day
         );
@@ -57,7 +56,6 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             "",
             0,
             address(0),
-            new address[](0),
             uint64(0),
             uint24(0)
         );
@@ -89,8 +87,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         require(
             msg.sender == serialProductMap[tokenId].sellar ||
                 msg.sender ==
-                serialProductMap[tokenId].ownerList[
-                    serialProductMap[tokenId].ownerList.length - 1
+                serialOwnerListMap[tokenId][
+                    serialOwnerListMap[tokenId].length - 1
                 ],
             "Only the owner of this address can see it's details"
         );
@@ -130,8 +128,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     ) internal virtual override {
         if (to != address(0)) {
             addressUserMap[to].boughtList.push(serial);
-            //null_add_arr.push(address(to));
-            serialProductMap[serial].ownerList.push(to);
+            serialOwnerListMap[serial].push(to);
         }
     }
 }

@@ -9,6 +9,7 @@ contract Whitelist is Ownable, Misc {
     mapping(uint256 => bool) internal usedSerials;
     mapping(address => user) internal addressUserMap;
     mapping(uint256 => product) internal serialProductMap;
+    mapping(uint256 => address[]) internal serialOwnerListMap;
 
     struct user {
         string name;
@@ -21,7 +22,6 @@ contract Whitelist is Ownable, Misc {
         string name;
         uint256 serialID;
         address sellar;
-        address[] ownerList;
         uint64 birthtime;
         uint24 lifespan;
     }
@@ -106,6 +106,19 @@ contract Whitelist is Ownable, Misc {
             "All licenses need to expire before leaving the business"
         );
         addressUserMap[msg.sender].isSellar = false;
+    }
+
+    function getOwnerList(uint16[] memory parts)
+        public
+        view
+        returns (address[] memory)
+    {
+        uint256 serial = combine(parts);
+        require(
+            serialProductMap[serial].sellar == msg.sender,
+            "Function accessible only by the member of the brand!!"
+        );
+        return serialOwnerListMap[serial];
     }
 
     function isRegistered() public view onlyRegistered {}
