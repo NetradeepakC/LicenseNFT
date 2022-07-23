@@ -110,6 +110,17 @@ export const loadWeb3 = async () => {
       window.location.reload();
     };
   }
+  
+  export const retrieveNFTHistory = async(account)=>{
+    try {
+      const arr = await instance.methods.getOwnerList().call({from:account});
+      return arr;
+    }
+    catch (err) {
+      window.alert(err);
+      window.location.reload();
+    };
+  }
 
   export const getProduct = async(account, tokenId)=>{
     try {
