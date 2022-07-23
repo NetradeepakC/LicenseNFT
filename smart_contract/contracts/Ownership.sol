@@ -53,7 +53,8 @@ contract Whitelist is Ownable, Misc {
         uint256 serial = combine(parts);
         require(
             serialOwnerListMap[serial][serialOwnerListMap[serial].length - 1] ==
-                msg.sender
+                msg.sender,
+            " Only the owner of this product can access this"
         );
         _;
     }
@@ -149,7 +150,8 @@ contract Whitelist is Ownable, Misc {
     {
         uint256 serial = combine(parts);
         require(
-            serialProductMap[serial].onSale,
+            serialProductMap[serial].onSale ||
+                serialProductMap[serial].sellar == msg.sender,
             "Product must be on sale to access this"
         );
         return

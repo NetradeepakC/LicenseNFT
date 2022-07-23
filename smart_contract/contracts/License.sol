@@ -8,7 +8,7 @@ import "./Misc.sol";
 
 contract License is ERC721, ERC721URIStorage, Whitelist {
     mapping(string => bool) private existingURIs;
-    mapping(address => string) internal addressURIMap;
+    mapping(address => string) private addressURIMap;
 
     constructor() ERC721("License", "License") {}
 
@@ -105,8 +105,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             (current - serialProductMap[tokenId].birthtime) <
             serialProductMap[tokenId].lifespan
         ) {
-            //return super.tokenURI(tokenId);
-            return uintToString(current);
+            return super.tokenURI(tokenId);
+            // return uintToString(current);
         }
         return "Illegal Access";
     }
