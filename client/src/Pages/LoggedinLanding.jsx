@@ -1,6 +1,6 @@
 import React from "react";
-import TopBar from "../Components/Account/TopBar";
-import CircularGradient from "../Components/HomePage/CircularGradient";
+import TopBar from "../Components/Product/TopBar";
+
 import Filters from "../Components/Landing/Filters";
 import Headline from "../Components/Landing/Headline";
 import ProductGrid from "../Components/Landing/ProductGrid";
@@ -20,14 +20,18 @@ const LoggedinLanding = () => {
   const [data, setData] = useState(null);
   const typeOfUser = location.state.userType;
   console.log(typeOfUser);
+
   const retrieve = async () => {
+    var finalData = [];
     const acc = await loadAccount(0);
     console.log(acc);
     const res = await retrieveBoughtNFT(acc);
-    //loop lagake res[i] will give all object
-    const res2 = await getProduct(acc, res[0]);
-    console.log(res2);
-    setData(res2);
+    for (var i = 0; i < res.length; i++) {
+      var res2 = await getProduct(acc, res[i]);
+      finalData.push(res2);
+    }
+
+    setData(finalData);
   };
   useEffect(() => {
     retrieve();
@@ -38,7 +42,7 @@ const LoggedinLanding = () => {
       <Headline />
       <SeachBar />
       <Filters />
-      <ProductGrid />
+      {data && <ProductGrid val={data} />}
     </div>
   );
 };
