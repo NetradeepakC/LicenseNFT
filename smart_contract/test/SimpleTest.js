@@ -45,9 +45,9 @@ contract("License",()=>{
         //         console.log(err);
         //     }
         // }
-        // console.log("Timer start");
-        // await new Promise(r => setTimeout(r, 10000));
-        // console.log("Timer end");
+        console.log("Timer start");
+        await new Promise(r => setTimeout(r, 60000));
+        console.log("Timer end");
         var arr=await license.getBoughtLicenses({from: accounts[1]});
         for(var i=0;i<arr.length;i++){
             arr[i]=await BigNumber(arr[i]);

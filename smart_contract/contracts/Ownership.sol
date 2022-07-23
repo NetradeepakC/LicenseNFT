@@ -23,7 +23,8 @@ contract Whitelist is Ownable, Misc {
         uint256 serialID;
         address sellar;
         uint64 birthtime;
-        uint24 lifespan;
+        uint64 lifespan;
+        bool onSale;
     }
 
     constructor() {
@@ -45,6 +46,15 @@ contract Whitelist is Ownable, Misc {
 
     modifier onlyRegistered() {
         require(usedBrandIDs[msg.sender], "Only registered members allowed");
+        _;
+    }
+
+    modifier onlyCurrentOwner(uint16[] memory parts) {
+        uint256 serial = combine(parts);
+        require(
+            serialOwnerListMap[serial][serialOwnerListMap[serial].length - 1] ==
+                msg.sender
+        );
         _;
     }
 
@@ -119,6 +129,31 @@ contract Whitelist is Ownable, Misc {
             "Function accessible only by the member of the brand!!"
         );
         return serialOwnerListMap[serial];
+    }
+
+    function setOnSale(uint16[] memory parts) public onlyCurrentOwner(parts) {
+        serialProductMap[combine(parts)].onSale = true;
+    }
+
+    function takeDownFromSale(uint16[] memory parts)
+        public
+        onlyCurrentOwner(parts)
+    {
+        serialProductMap[combine(parts)].onSale = false;
+    }
+
+    function getCurrentOwner(uint16[] memory parts)
+        public
+        view
+        returns (address)
+    {
+        uint256 serial = combine(parts);
+        require(
+            serialProductMap[serial].onSale,
+            "Product must be on sale to access this"
+        );
+        return
+            serialOwnerListMap[serial][serialOwnerListMap[serial].length - 1];
     }
 
     function isRegistered() public view onlyRegistered {}

@@ -27,7 +27,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         address to,
         uint16[] memory seeds,
         string memory uri,
-        uint24 day
+        uint64 secs
     ) public onlyRegistered onlySellar(msg.sender) {
         require(usedBrandIDs[to], "Only registered members allowed");
         require(!existingURIs[uri], "URI already in use.");
@@ -41,7 +41,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             serialID,
             msg.sender,
             uint64(block.timestamp),
-            day
+            secs,
+            false
         );
         time = block.timestamp;
     }
@@ -57,7 +58,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             0,
             address(0),
             uint64(0),
-            uint24(0)
+            uint64(0),
+            false
         );
         _setTokenURI(tokenId, "");
         _burn(tokenId);
@@ -94,10 +96,11 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         );
         uint64 current = uint64(block.timestamp);
         if (
-            (current - serialProductMap[tokenId].birthtime) / (24 * 3600) <
+            (current - serialProductMap[tokenId].birthtime) <
             serialProductMap[tokenId].lifespan
         ) {
-            return super.tokenURI(tokenId);
+            //return super.tokenURI(tokenId);
+            return uintToString(current);
         } else {
             require(false, "License is already expired");
         }
@@ -129,6 +132,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         if (to != address(0)) {
             addressUserMap[to].boughtList.push(serial);
             serialOwnerListMap[serial].push(to);
+            serialProductMap[serial].onSale = false;
         }
     }
 }
