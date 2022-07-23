@@ -126,7 +126,8 @@ contract Whitelist is Ownable, Misc {
     {
         uint256 serial = combine(parts);
         require(
-            serialProductMap[serial].sellar == msg.sender,
+            serialProductMap[serial].onSale ||
+                serialProductMap[serial].sellar == msg.sender,
             "Function accessible only by the member of the brand!!"
         );
         return serialOwnerListMap[serial];
