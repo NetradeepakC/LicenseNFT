@@ -29,7 +29,7 @@ const Filters = (props) => {
         className="border-2 border-btnColor rounded-xl px-4 "
         onClick={async () => {
           let list = await retrieveBoughtNFT(props.acc);
-          await getTokenURI(list[0]);
+          await getTokenURI(props.acc, list[0]);
         }}
       >
         getTokenURI

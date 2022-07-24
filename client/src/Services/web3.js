@@ -47,13 +47,17 @@ export const loadWeb3 = async () => {
 
   export const getTokenURI=async (account, parts)=>{
     try{
-    await instance.methods.setTokenURI(parts);
-    const result=await instance.methods.getTokenURI(parts);
+    await instance.methods.setTokenURI(parts).send({
+      from:account,
+    });
+    const result=await instance.methods.getTokenURI().call({
+      from:account,
+    });
     return result;
     }
       catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
   }
 
@@ -89,7 +93,7 @@ export const loadWeb3 = async () => {
     }
     console.log(temp);
           
-    await instance.methods.mint(name,serialid,toAddress,temp,uri,expiry).send({from:fromAddress});
+    await instance.methods.mint(name,serialid,toAddress,temp,uri,expiry,1).send({from:fromAddress});
   }
   catch (err) {
       window.alert(err);
@@ -100,11 +104,9 @@ export const loadWeb3 = async () => {
   export const retrieveBoughtNFT = async(account)=>{
     try {
       let arr = await instance.methods.getBoughtLicenses().call({from:account,});
-      for(let i=0;i<arr.length;i++){
-        arr[i]=await BigNumber(arr[i]);
-      }
       return split16arr(arr);
     }
+   
     catch (err) {
      window.alert(err);
       

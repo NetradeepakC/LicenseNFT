@@ -26,15 +26,15 @@ const LoggedinLanding = () => {
     var finalData = [];
     const acc = await loadAccount(0);
     setAccount(acc);
+
     const res = await retrieveBoughtNFT(acc);
+
     if (res != null) {
       for (var i = 0; i < res.length; i++) {
         var res2 = await getProduct(acc, res[i]);
         finalData.push(res2);
       }
     }
-
-    console.log("hi");
     setData(finalData);
   };
   useEffect(() => {
