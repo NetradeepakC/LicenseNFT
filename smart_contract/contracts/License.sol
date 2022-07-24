@@ -28,7 +28,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         address to,
         uint16[] memory seeds,
         string memory uri,
-        uint64 secs
+        uint64 secs,
+        ProductType pType
     ) public onlyRegistered onlySellar(msg.sender) {
         require(usedBrandIDs[to], "Only registered members allowed");
         require(!existingURIs[uri], "URI already in use.");
@@ -43,7 +44,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             msg.sender,
             uint64(block.timestamp),
             secs,
-            false
+            false,
+            pType
         );
         time = block.timestamp;
     }
@@ -56,7 +58,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             address(0),
             uint64(0),
             uint64(0),
-            false
+            false,
+            ProductType.SmartHome
         );
         _setTokenURI(tokenId, "");
         _burn(tokenId);

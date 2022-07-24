@@ -2,6 +2,12 @@ const License = artifacts.require("License");
 const BigNumber = require('bignumber.js');
 const MiscMath = require('../scripts/MiscMath.js');
 const Web3 = require('web3');
+const SmartHome=0
+const MobileDevice=1
+const Computer=2
+const Appliance=3
+const Clothing=4
+const Car=5
 
 contract("License",()=>{
     it('Mint license', async()=>{
@@ -22,7 +28,7 @@ contract("License",()=>{
                     temp.push(MiscMath.getRandom16());
                 }
                 console.log(temp);
-                await license.mint("Item1",123,accounts[1], temp, metadataURI, 5, {from: accounts[0]});
+                await license.mint("Item1",123,accounts[1], temp, metadataURI, 5, MobileDevice, {from: accounts[0]});
                 console.log(await license.getTime());
                 break;
             }

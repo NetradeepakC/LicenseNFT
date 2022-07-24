@@ -4,12 +4,20 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Misc.sol";
 
-contract Whitelist is Ownable, Misc {
+contract Whitelist is Misc {
     mapping(address => bool) internal usedBrandIDs;
     mapping(uint256 => bool) internal usedSerials;
     mapping(address => user) internal addressUserMap;
     mapping(uint256 => product) internal serialProductMap;
     mapping(uint256 => address[]) internal serialOwnerListMap;
+    enum ProductType {
+        SmartHome,
+        MobileDevice,
+        Computer,
+        Appliance,
+        Clothing,
+        Car
+    }
 
     struct user {
         string name;
@@ -25,6 +33,7 @@ contract Whitelist is Ownable, Misc {
         uint64 birthtime;
         uint64 lifespan;
         bool onSale;
+        ProductType pType;
     }
 
     constructor() {
