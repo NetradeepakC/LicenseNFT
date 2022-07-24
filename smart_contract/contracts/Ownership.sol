@@ -10,6 +10,9 @@ contract Whitelist is Misc {
     mapping(address => user) internal addressUserMap;
     mapping(uint256 => product) internal serialProductMap;
     mapping(uint256 => address[]) internal serialOwnerListMap;
+    mapping(address => uint256[]) internal addressBoughtListMap;
+    mapping(address => uint256[]) internal addressSoldListMap;
+
     enum ProductType {
         SmartHome,
         MobileDevice,
@@ -21,8 +24,6 @@ contract Whitelist is Misc {
 
     struct user {
         string name;
-        uint256[] boughtList;
-        uint256[] soldList;
         bool isSellar;
     }
 
@@ -88,7 +89,7 @@ contract Whitelist is Misc {
         usedBrandIDs[_member] = true;
         uint256[] memory temp1 = new uint256[](0);
         uint256[] memory temp2 = new uint256[](0);
-        addressUserMap[_member] = user(name, temp1, temp2, isSellar);
+        addressUserMap[_member] = user(name, isSellar);
     }
 
     function getName() public view onlyRegistered returns (string memory) {
@@ -104,7 +105,7 @@ contract Whitelist is Misc {
     }
 
     function getBoughtLicenses() public view returns (uint256[] memory) {
-        return addressUserMap[msg.sender].boughtList;
+        return addressBoughtListMap[msg.sender];
     }
 
     function getIssuedLicense()
@@ -113,7 +114,7 @@ contract Whitelist is Misc {
         onlySellar(msg.sender)
         returns (uint256[] memory)
     {
-        return addressUserMap[msg.sender].soldList;
+        return addressSoldListMap[msg.sender];
     }
 
     function makeSellar() public {
@@ -122,7 +123,7 @@ contract Whitelist is Misc {
 
     function kickSellar() public {
         require(
-            addressUserMap[msg.sender].soldList.length == 0,
+            addressSoldListMap[msg.sender].length == 0,
             "All licenses need to expire before leaving the business"
         );
         addressUserMap[msg.sender].isSellar = false;

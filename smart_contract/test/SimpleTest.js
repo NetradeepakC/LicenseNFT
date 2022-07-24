@@ -51,25 +51,39 @@ contract("License",()=>{
         //         console.log(err);
         //     }
         // }
-        // console.log("Timer start");
-        // await new Promise(r => setTimeout(r, 10000));
-        // console.log("Timer end");
-        var arr=await license.getBoughtLicenses({from: accounts[1]});
-        await license.addUser("User2",accounts[2], true, {from: accounts[0]});
-        for(var i=0;i<arr.length;i++){
-            arr[i]=await BigNumber(arr[i]);
-            console.log(await arr[i].toNumber());
-            console.log(i);
-        }
-        temp=await MiscMath.split16(arr[0]);
-        console.log(temp);
-        await license.setTokenURI(temp);
-        console.log(await license.getTokenURI());
-        console.log(await license.getProduct(temp));
-        console.log(await license.getOwnerList(temp));
         await license.setOnSale(temp,{from: accounts[1]});
         console.log(await license.getCurrentOwner(temp,{from: accounts[2]}));
-        await license.takeDownFromSale(temp,{from: accounts[1]});
+        var arr=await license.getBoughtLicenses({from: accounts[1]});
+        for(var i=0;i<arr.length;i++){
+            console.log(BigNumber(arr[i]).toNumber());
+        }
+        console.log("Timer start");
+        await new Promise(r => setTimeout(r, 10000));
+        console.log("Timer end");
+        try{
+            console.log(await license.getTokenURI());
+        }
+        catch{
+        console.log(await BigNumber(await license.getLast()).toNumber());
+        arr=await license.getBoughtLicenses({from: accounts[1]});
+        for(var i=0;i<arr.length;i++){
+            console.log(BigNumber(arr[i]).toNumber());
+        }}
+        // await license.addUser("User2",accounts[2], true, {from: accounts[0]});
+        // for(var i=0;i<arr.length;i++){
+        //     arr[i]=await BigNumber(arr[i]);
+        //     console.log(await arr[i].toNumber());
+        //     console.log(i);
+        // }
+        // temp=await MiscMath.split16(arr[0]);
+        // console.log(temp);
+        // await license.setTokenURI(temp);
+        // console.log(await license.getTokenURI());
+        // console.log(await license.getProduct(temp));
+        // console.log(await license.getOwnerList(temp));
+        // await license.setOnSale(temp,{from: accounts[1]});
+        // console.log(await license.getCurrentOwner(temp,{from: accounts[2]}));
+        // await license.takeDownFromSale(temp,{from: accounts[1]});
         //console.log(await license.getCurrentOwner(temp,{from: accounts[2]}));
         // console.log(await license.tokenURI(await license.getUINT256()));
         // await license.safeBurn(MiscMath.split16(License1),{from: accounts[0]});

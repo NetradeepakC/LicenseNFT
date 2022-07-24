@@ -38,6 +38,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
+        addressSoldListMap[msg.sender].push(tokenId);
         serialProductMap[tokenId] = product(
             name,
             serialID,
@@ -47,11 +48,33 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             false,
             pType
         );
-        time = block.timestamp;
     }
+
+    //temporary
+    uint256 lastToken;
+
+    function getLast() public view returns (uint256) {
+        return lastToken;
+    }
+
+    //temporary
 
     function safeBurn(uint256 tokenId) internal {
         usedSerials[tokenId] = false;
+        address currOwn = serialOwnerListMap[tokenId][
+            serialOwnerListMap[tokenId].length - 1
+        ];
+        lastToken = addressBoughtListMap[currOwn].length;
+        for (uint256 i = 0; i < addressBoughtListMap[currOwn].length; i++) {
+            lastToken = addressBoughtListMap[currOwn][i];
+            if (addressBoughtListMap[currOwn][i] == tokenId) {
+                addressBoughtListMap[currOwn][i] = addressBoughtListMap[
+                    currOwn
+                ][addressBoughtListMap[currOwn].length - 1];
+                addressBoughtListMap[currOwn].pop();
+                break;
+            }
+        }
         serialProductMap[tokenId] = product(
             "",
             0,
@@ -121,11 +144,12 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     ) internal virtual override {
         if (from != address(0)) {
             uint256 i;
-            for (i = 0; i < addressUserMap[from].boughtList.length; i++) {
-                if (addressUserMap[from].boughtList[i] == serial) {
-                    addressUserMap[from].boughtList[i] = addressUserMap[from]
-                        .boughtList[addressUserMap[from].boughtList.length - 1];
-                    addressUserMap[from].boughtList.pop();
+            for (i = 0; i < addressBoughtListMap[from].length; i++) {
+                if (addressBoughtListMap[from][i] == serial) {
+                    addressBoughtListMap[from][i] = addressBoughtListMap[from][
+                        addressBoughtListMap[from].length - 1
+                    ];
+                    addressBoughtListMap[from].pop();
                     break;
                 }
             }
@@ -138,7 +162,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         uint256 serial
     ) internal virtual override {
         if (to != address(0)) {
-            addressUserMap[to].boughtList.push(serial);
+            addressBoughtListMap[to].push(serial);
             serialOwnerListMap[serial].push(to);
             serialProductMap[serial].onSale = false;
         }
