@@ -1,7 +1,9 @@
 import React from "react";
 import bird from "./imgs/bird.png";
-
+import { useLocation, useParams } from "react-router-dom";
 export default function MainContent() {
+  let location = useLocation();
+  let { id } = useParams();
   const price_css = {
     text: "text-sm text-[#ADB9C7] ",
     price: "text-2xl font-bold py-8 ",
@@ -18,12 +20,9 @@ export default function MainContent() {
         <img src={bird} alt="I am a bird" />
       </div>
       <div className="p-10 flex flex-col">
-        <h1 className="text-6xl font-bold">#id Seagull</h1>
+        <h1 className="text-6xl font-bold">{location.state.data.name}</h1>
         <p className="text-sm text-[#ADB9C7] py-10 leading-8">
-          This is some description Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Neque cum provident doloribus, beatae magni
-          mollitia? Veniam odio adipisci doloribus facilis aut sint. Accusamus
-          tenetur quam, sed incidunt porro deleniti itaque.
+          {location.state.data.description}
         </p>
         <div className="flex w-full">
           <div className="basis-1/2">

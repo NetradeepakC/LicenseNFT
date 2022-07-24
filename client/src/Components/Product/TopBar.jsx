@@ -27,17 +27,18 @@ export default function TopBar(props) {
   const toPush =
     props.type == "productdetails" ? (
       <>
-        <img
-          src={back_logo}
-          alt="back_logo"
-          className="w-10 ml-10 sm:ml-24 lg:ml-36 "
-        />
         <button
           className="px-12 py-4 mr-10 sm:mr-24 lg:mr-36 border-2 border-btnColor rounded-xl hover:bg-btnColor"
           onClick={handleLogout}
         >
           Logout
         </button>
+        <img
+          src={back_logo}
+          alt="back_logo"
+          className="w-10 ml-10 sm:ml-24 lg:ml-36 mx-auto hover:cursor-pointer"
+          onClick={() => router(-1)}
+        />
       </>
     ) : (
       <>

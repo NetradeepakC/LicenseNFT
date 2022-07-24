@@ -6,7 +6,9 @@ const ProductGrid = (props) => {
   console.log(data);
   var jsx = [];
   for (var i = 0; i < data.length; i++) {
-    jsx.push(<Card name={data[i].name} description={data[i].serialID} />);
+    jsx.push(
+      <Card name={data[i].name} description={data[i].serialID} key={i} id={i} />
+    );
   }
 
   return <div className="md:grid grid-cols-3 gap-5 mx-10 lg:mx-24">{jsx}</div>;

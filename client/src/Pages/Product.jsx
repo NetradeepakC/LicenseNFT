@@ -11,7 +11,7 @@ export default function Product() {
       <TopBar type="productdetails" />
       <CircularGradient />
       <MainContent />
-      <Details />
+      <Details default="description" />
       <Footer />
     </div>
   );

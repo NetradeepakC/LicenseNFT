@@ -29,11 +29,30 @@ export default function NavBar(props) {
           WarrantyIt !
         </h1>
         <ul className="mb-5 lg:mb-0 flex grow justify-center self-center">
-          <li className="px-3 lg:px-12 font-bold decoration-sky-500 decoration-2 underline underline-offset-8">
+          <li
+            className="px-3 lg:px-12 hover:font-bold hover:decoration-sky-500 hover:decoration-2 hover:underline hover:underline-offset-8 hover:cursor-pointer"
+            onClick={() => {
+              router("/");
+            }}
+          >
             Home
           </li>
-          <li className="px-3 lg:px-12">About Us</li>
-          <li className="px-3 lg:px-12">Contact Us</li>
+          <li
+            className="px-3 lg:px-12 hover:font-bold hover:cursor-pointer hover:decoration-sky-500 hover:decoration-2 hover:underline hover:underline-offset-8"
+            onClick={() => {
+              router("/about");
+            }}
+          >
+            About Us
+          </li>
+          <li
+            className="px-3 lg:px-12 hover:font-bold hover:cursor-pointer hover:decoration-sky-500 hover:decoration-2 hover:underline hover:underline-offset-8"
+            onClick={() => {
+              router("/contact");
+            }}
+          >
+            Contact Us
+          </li>
         </ul>
         <button
           className="lg:mr-64 font-bold border-2 px-6 py-4 content-center rounded-2xl border-sky-500"
