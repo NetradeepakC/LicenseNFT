@@ -2,12 +2,14 @@
 import { contractABI , licenseContract} from "./ABI/constants";
 import {getRandom16,split16, split16arr} from "./MiscMath"
 import Web3 from "web3"
+import BigNumber from "bignumber.js";
 const SmartHome=0
 const MobileDevice=1
 const Computer=2
 const Appliance=3
 const Clothing=4
 const Car=5
+
 
 export const loadWeb3 = async () => {
     if (window.ethereum) {
@@ -39,7 +41,7 @@ export const loadWeb3 = async () => {
     }
       catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   };
 
@@ -51,7 +53,7 @@ export const loadWeb3 = async () => {
     }
       catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   }
 
@@ -64,7 +66,7 @@ export const loadWeb3 = async () => {
     }
       catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   };
 
@@ -75,7 +77,7 @@ export const loadWeb3 = async () => {
     }
       catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   };
 
@@ -97,15 +99,16 @@ export const loadWeb3 = async () => {
 
   export const retrieveBoughtNFT = async(account)=>{
     try {
-      const arr = await instance.methods.getBoughtLicenses().call({from:account,});
-      for(var i=0;i<arr.length;i++){
+      let arr = await instance.methods.getBoughtLicenses().call({from:account,});
+      for(let i=0;i<arr.length;i++){
         arr[i]=await BigNumber(arr[i]);
       }
       return split16arr(arr);
     }
     catch (err) {
-      window.alert(err);
-      window.location.reload();
+     window.alert(err);
+      
+      // window.location.reload();
     };
   }
   
@@ -116,7 +119,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   }
   
@@ -127,7 +130,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   }
 
@@ -138,7 +141,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   }
 
@@ -148,7 +151,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   }
 
@@ -158,7 +161,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   }
 
@@ -168,7 +171,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      window.location.reload();
+      // window.location.reload();
     };
   }
 
@@ -179,7 +182,7 @@ export const getOwnerList = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    window.location.reload();
+    // window.location.reload();
   };
 }
 
@@ -189,7 +192,7 @@ export const setOnSale = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    window.location.reload();
+    // window.location.reload();
   };
 }
 
@@ -199,7 +202,7 @@ export const takeDownFromSale = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    window.location.reload();
+    // window.location.reload();
   };
 }
 
@@ -210,6 +213,6 @@ export const getCurrentOwner = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    window.location.reload();
+    // window.location.reload();
   };
 }

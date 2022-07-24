@@ -18,19 +18,23 @@ import {
 const LoggedinLanding = () => {
   const location = useLocation();
   const [data, setData] = useState(null);
+  const [account, setAccount] = useState(null);
   const typeOfUser = location.state.userType;
   console.log(typeOfUser);
 
   const retrieve = async () => {
     var finalData = [];
     const acc = await loadAccount(0);
-    console.log(acc);
+    setAccount(acc);
     const res = await retrieveBoughtNFT(acc);
-    for (var i = 0; i < res.length; i++) {
-      var res2 = await getProduct(acc, res[i]);
-      finalData.push(res2);
+    if (res != null) {
+      for (var i = 0; i < res.length; i++) {
+        var res2 = await getProduct(acc, res[i]);
+        finalData.push(res2);
+      }
     }
 
+    console.log("hi");
     setData(finalData);
   };
   useEffect(() => {
@@ -41,8 +45,8 @@ const LoggedinLanding = () => {
       <TopBar type="landing" user={typeOfUser} />
       <Headline />
       <SeachBar />
-      <Filters />
-      {data && <ProductGrid val={data} />}
+      <Filters acc={account} />
+      <div>{data && <ProductGrid val={data} />}</div>
     </div>
   );
 };
