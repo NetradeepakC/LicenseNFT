@@ -29,7 +29,6 @@ contract("License",()=>{
                 }
                 console.log(temp);
                 await license.mint("Item1",123,accounts[1], temp, metadataURI, 5, MobileDevice, {from: accounts[0]});
-                console.log(await license.getTime());
                 break;
             }
             catch(err){
@@ -52,23 +51,26 @@ contract("License",()=>{
         //     }
         // }
         await license.setOnSale(temp,{from: accounts[1]});
-        console.log(await license.getCurrentOwner(temp,{from: accounts[2]}));
         var arr=await license.getBoughtLicenses({from: accounts[1]});
-        for(var i=0;i<arr.length;i++){
-            console.log(BigNumber(arr[i]).toNumber());
-        }
+        console.log(BigNumber(arr[0]).toNumber());
         console.log("Timer start");
         await new Promise(r => setTimeout(r, 10000));
         console.log("Timer end");
         try{
+            await license.setTokenURI(temp);
             console.log(await license.getTokenURI());
+            console.log("@");
         }
-        catch{
-        console.log(await BigNumber(await license.getLast()).toNumber());
-        arr=await license.getBoughtLicenses({from: accounts[1]});
-        for(var i=0;i<arr.length;i++){
-            console.log(BigNumber(arr[i]).toNumber());
-        }}
+        catch (err){
+        // console.log(await BigNumber(await license.getLast()).toNumber());
+        // arr=await license.getBoughtLicenses({from: accounts[1]});
+        // console.log("!");
+        // console.log(arr);
+            console.log(err);
+        console.log(await license.getOwnerList(temp));
+        console.log(accounts[1]);
+        }
+        console.log(await BigNumber(await license.getTemp()).toString());
         // await license.addUser("User2",accounts[2], true, {from: accounts[0]});
         // for(var i=0;i<arr.length;i++){
         //     arr[i]=await BigNumber(arr[i]);

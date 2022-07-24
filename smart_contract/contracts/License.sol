@@ -16,12 +16,6 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     //     return "ipfs://";
     // }
 
-    uint256 public time;
-
-    function getTime() public view returns (string memory) {
-        return uintToString(time);
-    }
-
     function mint(
         string memory name,
         uint256 serialID,
@@ -30,9 +24,9 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         string memory uri,
         uint64 secs,
         ProductType pType
-    ) public onlyRegistered onlySellar(msg.sender) {
+    ) public onlySellar(msg.sender) {
         require(usedBrandIDs[to], "Only registered members allowed");
-        require(!existingURIs[uri], "URI already in use.");
+        require(!existingURIs[uri], concatenate(uri, " : URI already in use."));
         uint256 tokenId = combine(seeds);
         addSerial(tokenId);
         _safeMint(to, tokenId);
@@ -51,10 +45,11 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     }
 
     //temporary
-    uint256 lastToken;
 
-    function getLast() public view returns (uint256) {
-        return lastToken;
+    uint256 temp = 12345;
+
+    function getTemp() public view returns (uint256) {
+        return temp;
     }
 
     //temporary
@@ -64,9 +59,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         address currOwn = serialOwnerListMap[tokenId][
             serialOwnerListMap[tokenId].length - 1
         ];
-        lastToken = addressBoughtListMap[currOwn].length;
+        temp = tokenId;
         for (uint256 i = 0; i < addressBoughtListMap[currOwn].length; i++) {
-            lastToken = addressBoughtListMap[currOwn][i];
             if (addressBoughtListMap[currOwn][i] == tokenId) {
                 addressBoughtListMap[currOwn][i] = addressBoughtListMap[
                     currOwn
@@ -75,6 +69,16 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
                 break;
             }
         }
+        // serialProductMap[tokenId].name = "";
+        // serialProductMap[tokenId].serialID = 0;
+        // serialProductMap[tokenId].sellar = address(0);
+        // serialProductMap[tokenId].birthtime = uint64(0);
+        // serialProductMap[tokenId].lifespan = uint64(0);
+        // serialProductMap[tokenId].onSale = false;
+        // serialProductMap[tokenId].pType = ProductType.SmartHome;
+        // while (serialOwnerListMap[tokenId].length > 0) {
+        //     serialOwnerListMap[tokenId].pop();
+        // }
         serialProductMap[tokenId] = product(
             "",
             0,
@@ -84,8 +88,8 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             false,
             ProductType.SmartHome
         );
-        _setTokenURI(tokenId, "");
-        _burn(tokenId);
+        serialOwnerListMap[tokenId] = new address[](0);
+        // _burn(tokenId);
     }
 
     function _burn(uint256 tokenId)
@@ -100,24 +104,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
     }
 
     function setTokenURI(uint16[] memory parts) public returns (string memory) {
-        uint64 current = uint64(block.timestamp);
         uint256 tokenId = combine(parts);
-        if (
-            (current - serialProductMap[tokenId].birthtime) >=
-            serialProductMap[tokenId].lifespan
-        ) {
-            safeBurn(tokenId);
-            require(false, "License is already expired");
-        }
-        addressURIMap[msg.sender] = tokenURI(tokenId);
-    }
-
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
         require(
             msg.sender == serialProductMap[tokenId].sellar ||
                 msg.sender ==
@@ -128,12 +115,22 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         );
         uint64 current = uint64(block.timestamp);
         if (
-            (current - serialProductMap[tokenId].birthtime) <
+            (current - serialProductMap[tokenId].birthtime) >=
             serialProductMap[tokenId].lifespan
         ) {
-            return super.tokenURI(tokenId);
-            // return uintToString(current);
+            safeBurn(tokenId);
+            addressURIMap[msg.sender] = "License is expired";
+        } else {
+            addressURIMap[msg.sender] = super.tokenURI(tokenId);
         }
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
         return "Illegal Access";
     }
 
@@ -146,10 +143,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
             uint256 i;
             for (i = 0; i < addressBoughtListMap[from].length; i++) {
                 if (addressBoughtListMap[from][i] == serial) {
-                    addressBoughtListMap[from][i] = addressBoughtListMap[from][
-                        addressBoughtListMap[from].length - 1
-                    ];
-                    addressBoughtListMap[from].pop();
+                    addressBoughtListMap[from][i] = 0;
                     break;
                 }
             }

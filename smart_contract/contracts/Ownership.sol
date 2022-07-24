@@ -13,6 +13,17 @@ contract Whitelist is Misc {
     mapping(address => uint256[]) internal addressBoughtListMap;
     mapping(address => uint256[]) internal addressSoldListMap;
 
+    // product null_product =
+    //     product(
+    //         "",
+    //         0,
+    //         address(0),
+    //         uint64(0),
+    //         uint64(0),
+    //         false,
+    //         ProductType.SmartHome
+    //     );
+
     enum ProductType {
         SmartHome,
         MobileDevice,
@@ -87,8 +98,6 @@ contract Whitelist is Misc {
     ) public {
         require(!usedBrandIDs[_member], "Address already registered");
         usedBrandIDs[_member] = true;
-        uint256[] memory temp1 = new uint256[](0);
-        uint256[] memory temp2 = new uint256[](0);
         addressUserMap[_member] = user(name, isSellar);
     }
 
