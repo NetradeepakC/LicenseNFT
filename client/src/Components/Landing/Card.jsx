@@ -18,7 +18,9 @@ const Card = (props) => {
               (await getTokenURI(props.acc, props.token)) !=
               "License is expired"
             ) {
-              router("/product/" + props.id, { state: { data: data } });
+              router("/product/" + props.id, {
+                state: { data: data, user: props.user },
+              });
             } else {
               window.alert(
                 "The License is expired. The product will be removed from the catalog"
@@ -26,7 +28,9 @@ const Card = (props) => {
               window.location.reload();
             }
           } else {
-            router("/product/" + props.id, { state: { data: data } });
+            router("/product/" + props.id, {
+              state: { data: data, user: props.user },
+            });
           }
         }}
       >

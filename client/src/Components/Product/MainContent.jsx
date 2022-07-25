@@ -24,16 +24,7 @@ export default function MainContent() {
         <p className="text-sm text-[#ADB9C7] py-10 leading-8">
           {location.state.data.description}
         </p>
-        <div className="flex w-full">
-          <div className="basis-1/2">
-            <h1 className={price_css.text}>Initial Price</h1>
-            <h2 className={price_css.price}>10.89 ETH</h2>
-          </div>
-          <div className="basis-1/2">
-            <h1 className={price_css.text + "text-right"}>Current Price</h1>
-            <h2 className={price_css.price + "text-right"}>10.89 ETH</h2>
-          </div>
-        </div>
+        <div className="flex w-full"></div>
         <div className="flex bg-gray-900 rounded-2xl">
           <div className="basis-1/2 ">
             <h1 className={info_css.company}>Company</h1>
@@ -43,14 +34,6 @@ export default function MainContent() {
             <h1 className={info_css.company + "text-right"}>Owner</h1>
             <h2 className={info_css.name + "text-right"}>SalvadorDali</h2>
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4 w-full flex-grow items-end">
-          <button className="box-border col-span-1 h-20 rounded-xl w-auto border-2 border-[#1E50FF]">
-            Purchase Now
-          </button>
-          <button className="box-border col-span-1 h-20 rounded-xl w-auto bg-[#1E50FF]">
-            Make a Bid
-          </button>
         </div>
       </div>
     </div>

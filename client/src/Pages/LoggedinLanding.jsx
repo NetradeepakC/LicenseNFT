@@ -16,6 +16,7 @@ import {
   getProduct,
   web3,
 } from "../Services/web3";
+import CircularGradient from "../Components/HomePage/CircularGradient";
 const LoggedinLanding = () => {
   const location = useLocation();
   const [data, setData] = useState(null);
@@ -63,8 +64,9 @@ const LoggedinLanding = () => {
   return (
     <div className=" bg-mainBg flex flex-wrap flex-col text-white gap-5 ">
       <TopBar type="landing" user={typeOfUser} />
+      <CircularGradient></CircularGradient>
       <Headline />
-      <SeachBar />
+
       <div>
         {data && <ProductGrid val={data} acc={account} user={typeOfUser} />}
       </div>
