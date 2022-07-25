@@ -6,23 +6,13 @@ import "./Misc.sol";
 
 contract Whitelist is Misc {
     mapping(address => bool) internal usedBrandIDs;
+    mapping(uint256 => bool) internal deletedSerials;
     mapping(uint256 => bool) internal usedSerials;
     mapping(address => user) internal addressUserMap;
     mapping(uint256 => product) internal serialProductMap;
     mapping(uint256 => address[]) internal serialOwnerListMap;
     mapping(address => uint256[]) internal addressBoughtListMap;
     mapping(address => uint256[]) internal addressSoldListMap;
-
-    // product null_product =
-    //     product(
-    //         "",
-    //         0,
-    //         address(0),
-    //         uint64(0),
-    //         uint64(0),
-    //         false,
-    //         ProductType.SmartHome
-    //     );
 
     enum ProductType {
         SmartHome,
@@ -50,6 +40,7 @@ contract Whitelist is Misc {
 
     constructor() {
         usedSerials[0] = true;
+        deletedSerials[0] = true;
     }
 
     modifier onlySellar(address add) {
@@ -76,6 +67,14 @@ contract Whitelist is Misc {
             serialOwnerListMap[serial][serialOwnerListMap[serial].length - 1] ==
                 msg.sender,
             " Only the owner of this product can access this"
+        );
+        _;
+    }
+
+    modifier onlyAlive(uint16[] memory parts) {
+        require(
+            !deletedSerials[combine(parts)],
+            "This product has been deleted."
         );
         _;
     }
@@ -108,6 +107,7 @@ contract Whitelist is Misc {
     function getProduct(uint16[] memory parts)
         public
         view
+        onlyAlive(parts)
         returns (product memory)
     {
         return serialProductMap[combine(parts)];
@@ -141,6 +141,7 @@ contract Whitelist is Misc {
     function getOwnerList(uint16[] memory parts)
         public
         view
+        onlyAlive(parts)
         returns (address[] memory)
     {
         uint256 serial = combine(parts);
@@ -152,12 +153,17 @@ contract Whitelist is Misc {
         return serialOwnerListMap[serial];
     }
 
-    function setOnSale(uint16[] memory parts) public onlyCurrentOwner(parts) {
+    function setOnSale(uint16[] memory parts)
+        public
+        onlyAlive(parts)
+        onlyCurrentOwner(parts)
+    {
         serialProductMap[combine(parts)].onSale = true;
     }
 
     function takeDownFromSale(uint16[] memory parts)
         public
+        onlyAlive(parts)
         onlyCurrentOwner(parts)
     {
         serialProductMap[combine(parts)].onSale = false;
@@ -166,6 +172,7 @@ contract Whitelist is Misc {
     function getCurrentOwner(uint16[] memory parts)
         public
         view
+        onlyAlive(parts)
         returns (address)
     {
         uint256 serial = combine(parts);
@@ -179,4 +186,8 @@ contract Whitelist is Misc {
     }
 
     function isRegistered() public view onlyRegistered {}
+
+    function isDeleted(uint16[] memory parts) public view returns (bool) {
+        return deletedSerials[combine(parts)];
+    }
 }

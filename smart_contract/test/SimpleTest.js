@@ -9,6 +9,16 @@ const Appliance=3
 const Clothing=4
 const Car=5
 
+split16 = function(bgn) {
+    let base=1<<16;
+    var split=[];
+    while(!bgn.isEqualTo(0)){
+        split.push((bgn.modulo(base)).toNumber());
+        bgn=bgn.dividedToIntegerBy(base);
+    }
+    return split;
+};
+
 contract("License",()=>{
     it('Mint license', async()=>{
         let accounts = await web3.eth.getAccounts();
@@ -35,79 +45,41 @@ contract("License",()=>{
                 console.log(err);
             }
         }
-        // while(true){
-        //     try{
-        //         var temp=[];
-        //         for(let i=0;i<16;i++){
-        //             temp.push(MiscMath.getRandom16());
-        //         }
-        //         console.log(temp);
-        //         await license.mint("Item1",accounts[1], temp, metadataURI2, 5, {from: accounts[0]});
-        //         console.log(await license.getTime());
-        //         break;
-        //     }
-        //     catch(err){
-        //         console.log(err);
-        //     }
-        // }
+        while(true){
+            try{
+                var temp=[];
+                for(let i=0;i<16;i++){
+                    temp.push(MiscMath.getRandom16());
+                }
+                console.log(temp);
+                await license.mint("Item1", 234,accounts[1], temp, metadataURI2, 500, SmartHome, {from: accounts[0]});
+                break;
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
         await license.setOnSale(temp,{from: accounts[1]});
         var arr=await license.getBoughtLicenses({from: accounts[1]});
-        console.log(BigNumber(arr[0]).toNumber());
+        for(var i=0;i<arr.length;i++){
+            console.log(BigNumber(arr[i]).toNumber());
+        }
         console.log("Timer start");
         await new Promise(r => setTimeout(r, 10000));
         console.log("Timer end");
-        try{
-            await license.setTokenURI(temp);
-            console.log(await license.getTokenURI());
-            console.log("@");
+        var arr=await license.getBoughtLicenses({from: accounts[1]});
+        // if(await !license.isDeleted(temp)){
+        arr=await license.getBoughtLicenses({from: accounts[1]});
+        for(var i=0;i<arr.length;i++){
+            await license.setTokenURI(split16(BigNumber(arr[i])), { from: accounts[0], gas: 5000000, gasPrice: 500000000 });
         }
-        catch (err){
-        // console.log(await BigNumber(await license.getLast()).toNumber());
-        // arr=await license.getBoughtLicenses({from: accounts[1]});
-        // console.log("!");
-        // console.log(arr);
-            console.log(err);
-        console.log(await license.getOwnerList(temp));
-        console.log(accounts[1]);
+        arr=await license.getBoughtLicenses({from: accounts[1]});
+        for(var i=0;i<arr.length;i++){
+            console.log(BigNumber(arr[i]).toNumber());
         }
-        console.log(await BigNumber(await license.getTemp()).toString());
-        // await license.addUser("User2",accounts[2], true, {from: accounts[0]});
-        // for(var i=0;i<arr.length;i++){
-        //     arr[i]=await BigNumber(arr[i]);
-        //     console.log(await arr[i].toNumber());
-        //     console.log(i);
         // }
-        // temp=await MiscMath.split16(arr[0]);
-        // console.log(temp);
-        // await license.setTokenURI(temp);
-        // console.log(await license.getTokenURI());
-        // console.log(await license.getProduct(temp));
-        // console.log(await license.getOwnerList(temp));
-        // await license.setOnSale(temp,{from: accounts[1]});
-        // console.log(await license.getCurrentOwner(temp,{from: accounts[2]}));
-        // await license.takeDownFromSale(temp,{from: accounts[1]});
-        //console.log(await license.getCurrentOwner(temp,{from: accounts[2]}));
-        // console.log(await license.tokenURI(await license.getUINT256()));
-        // await license.safeBurn(MiscMath.split16(License1),{from: accounts[0]});
-        // await license.addMember(accounts[1], {from: accounts[0]});
-        // metadataURI = 'cid/test2.png'
-        // var License2;
-        // while(true){
-        //     try{
-        //         var temp=[];
-        //         for(let i=0;i<16;i++){
-        //             temp.push(MiscMath.getRandom16());
-        //         }
-        //         await license.mint(accounts[1], temp, metadataURI, 10, {from: accounts[0]});
-        //         break;
-        //     }
-        //     catch(err){
-        //         console.log("!!!");
-        //     }
+        // else{
+        //     console.log("Fuck")
         // }
-        // License2=(await BigNumber(await license.getUNT256()));
-        // console.log(await License2.toNumber());
-        // console.log(await license.tokenURI(0));
-        // await license.safeBurn(1,{from: accounts[1]});
     });
 });

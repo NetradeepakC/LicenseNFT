@@ -28,11 +28,13 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         require(usedBrandIDs[to], "Only registered members allowed");
         require(!existingURIs[uri], concatenate(uri, " : URI already in use."));
         uint256 tokenId = combine(seeds);
+        require(!usedSerials[tokenId], "Serial ID must be unused");
         addSerial(tokenId);
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         existingURIs[uri] = true;
         addressSoldListMap[msg.sender].push(tokenId);
+        usedSerials[tokenId] = true;
         serialProductMap[tokenId] = product(
             name,
             serialID,
@@ -44,52 +46,16 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         );
     }
 
-    //temporary
-
-    uint256 temp = 12345;
-
-    function getTemp() public view returns (uint256) {
-        return temp;
-    }
-
-    //temporary
-
     function safeBurn(uint256 tokenId) internal {
-        usedSerials[tokenId] = false;
-        address currOwn = serialOwnerListMap[tokenId][
-            serialOwnerListMap[tokenId].length - 1
-        ];
-        temp = tokenId;
-        for (uint256 i = 0; i < addressBoughtListMap[currOwn].length; i++) {
-            if (addressBoughtListMap[currOwn][i] == tokenId) {
-                addressBoughtListMap[currOwn][i] = addressBoughtListMap[
-                    currOwn
-                ][addressBoughtListMap[currOwn].length - 1];
-                addressBoughtListMap[currOwn].pop();
+        deletedSerials[tokenId] = true;
+        uint256 i;
+        for (i = 0; i < addressBoughtListMap[msg.sender].length; i++) {
+            if (addressBoughtListMap[msg.sender][i] == tokenId) {
+                addressBoughtListMap[msg.sender][i] = 0;
                 break;
             }
         }
-        // serialProductMap[tokenId].name = "";
-        // serialProductMap[tokenId].serialID = 0;
-        // serialProductMap[tokenId].sellar = address(0);
-        // serialProductMap[tokenId].birthtime = uint64(0);
-        // serialProductMap[tokenId].lifespan = uint64(0);
-        // serialProductMap[tokenId].onSale = false;
-        // serialProductMap[tokenId].pType = ProductType.SmartHome;
-        // while (serialOwnerListMap[tokenId].length > 0) {
-        //     serialOwnerListMap[tokenId].pop();
-        // }
-        serialProductMap[tokenId] = product(
-            "",
-            0,
-            address(0),
-            uint64(0),
-            uint64(0),
-            false,
-            ProductType.SmartHome
-        );
-        serialOwnerListMap[tokenId] = new address[](0);
-        // _burn(tokenId);
+        _burn(tokenId);
     }
 
     function _burn(uint256 tokenId)
@@ -97,10 +63,6 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         override(ERC721, ERC721URIStorage)
     {
         super._burn(tokenId);
-    }
-
-    function getTokenURI() public view returns (string memory) {
-        return addressURIMap[msg.sender];
     }
 
     function setTokenURI(uint16[] memory parts) public returns (string memory) {
@@ -131,7 +93,7 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        return "Illegal Access";
+        return addressURIMap[msg.sender];
     }
 
     function _beforeTokenTransfer(
