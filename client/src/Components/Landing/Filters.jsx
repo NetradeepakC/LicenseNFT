@@ -25,13 +25,7 @@ const Filters = (props) => {
       <button className="border-2 border-btnColor rounded-xl px-4 py-2">
         mint
       </button>
-      <button
-        className="border-2 border-btnColor rounded-xl px-4 "
-        onClick={async () => {
-          let list = await retrieveBoughtNFT(props.acc);
-          await getTokenURI(props.acc, list[0]);
-        }}
-      >
+      <button className="border-2 border-btnColor rounded-xl px-4 ">
         getTokenURI
       </button>
     </div>

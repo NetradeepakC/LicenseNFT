@@ -7,7 +7,15 @@ const ProductGrid = (props) => {
   var jsx = [];
   for (var i = 0; i < data.length; i++) {
     jsx.push(
-      <Card name={data[i].name} description={data[i].serialID} key={i} id={i} />
+      <Card
+        name={data[i][1].name}
+        description={data[i][1].serialID}
+        key={i}
+        id={i}
+        token={data[i][0]}
+        acc={props.acc}
+        user={props.user}
+      />
     );
   }
 

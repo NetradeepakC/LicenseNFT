@@ -12,6 +12,7 @@ import {
   issueNFT,
   loadAccount,
   retrieveBoughtNFT,
+  retrieveIssuedNFT,
   getProduct,
   web3,
 } from "../Services/web3";
@@ -32,21 +33,41 @@ const LoggedinLanding = () => {
     if (res != null) {
       for (var i = 0; i < res.length; i++) {
         var res2 = await getProduct(acc, res[i]);
-        finalData.push(res2);
+        finalData.push([res[i], res2]);
+      }
+    }
+    setData(finalData);
+  };
+
+  const retrieveForSeller = async () => {
+    var finalData = [];
+    const acc = await loadAccount(0);
+    setAccount(acc);
+
+    const res = await retrieveIssuedNFT(acc);
+
+    if (res != null) {
+      for (var i = 0; i < res.length; i++) {
+        try {
+          var res2 = await getProduct(acc, res[i]);
+          finalData.push([res[i], res2]);
+        } catch {}
       }
     }
     setData(finalData);
   };
   useEffect(() => {
-    retrieve();
+    if (typeOfUser === "company") retrieveForSeller();
+    else retrieve();
   }, []);
   return (
     <div className=" bg-mainBg flex flex-wrap flex-col text-white gap-5 ">
       <TopBar type="landing" user={typeOfUser} />
       <Headline />
       <SeachBar />
-      <Filters acc={account} />
-      <div>{data && <ProductGrid val={data} />}</div>
+      <div>
+        {data && <ProductGrid val={data} acc={account} user={typeOfUser} />}
+      </div>
     </div>
   );
 };
