@@ -73,7 +73,8 @@ contract Whitelist is Misc {
 
     modifier onlyAlive(uint16[] memory parts) {
         require(
-            !deletedSerials[combine(parts)],
+            !deletedSerials[combine(parts)] ||
+                addressUserMap[msg.sender].isSellar,
             "This product has been deleted."
         );
         _;
@@ -117,7 +118,7 @@ contract Whitelist is Misc {
         return addressBoughtListMap[msg.sender];
     }
 
-    function getIssuedLicense()
+    function getIssuedLicenses()
         public
         view
         onlySellar(msg.sender)
