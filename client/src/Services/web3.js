@@ -50,7 +50,7 @@ export const loadWeb3 = async () => {
     await instance.methods.setTokenURI(parts).send({
       from:account,
     });
-    const result=await instance.methods.getTokenURI().call({
+    const result=await instance.methods.tokenURI().call({
       from:account,
     });
     return result;
@@ -104,11 +104,16 @@ export const loadWeb3 = async () => {
   export const retrieveBoughtNFT = async(account)=>{
     try {
       let arr = await instance.methods.getBoughtLicenses().call({from:account,});
-      return split16arr(arr);
+      var result=[];
+        for(var i=0;i<arr.length;i++){
+            if(!BigNumber(arr[i]).isEqualTo(0)){
+              result.push(split16(BigNumber(arr[i])));
+            }
+        }
+        return result;
     }
-   
     catch (err) {
-     window.alert(err);
+      window.alert(err);
       
       // window.location.reload();
     };
@@ -117,7 +122,13 @@ export const loadWeb3 = async () => {
   export const retrieveIssuedNFT = async(account)=>{
     try {
       const arr = await instance.methods.getIssuedLicenses().call({from:account,});
-      return split16arr(arr);
+      var result=[];
+        for(var i=0;i<arr.length;i++){
+            if(!BigNumber(arr[i]).isEqualTo(0)){
+              result.push(split16(BigNumber(arr[i])));
+            }
+        }
+        return result;
     }
     catch (err) {
       window.alert(err);
@@ -125,9 +136,9 @@ export const loadWeb3 = async () => {
     };
   }
   
-  export const retrieveNFTHistory = async(account)=>{
+  export const retrieveNFTHistory = async(account, tokenId)=>{
     try {
-      const arr = await instance.methods.getOwnerList().call({from:account});
+      const arr = await instance.methods.getOwnerList(tokenId).call({from:account});
       return arr;
     }
     catch (err) {
