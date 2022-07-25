@@ -87,13 +87,17 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         }
     }
 
+    function getTokenURI() public view returns (string memory) {
+        return addressURIMap[msg.sender];
+    }
+
     function tokenURI(uint256 tokenId)
         public
         view
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        return addressURIMap[msg.sender];
+        return "Illegal Access";
     }
 
     function _beforeTokenTransfer(

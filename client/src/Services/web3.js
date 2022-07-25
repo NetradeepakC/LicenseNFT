@@ -50,7 +50,7 @@ export const loadWeb3 = async () => {
     await instance.methods.setTokenURI(parts).send({
       from:account,
     });
-    const result=await instance.methods.tokenURI().call({
+    const result=await instance.methods.getTokenURI().call({
       from:account,
     });
     return result;
