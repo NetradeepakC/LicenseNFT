@@ -5,7 +5,7 @@ import NavBar from "../Components/HomePage/NavBar";
 const Contact = () => {
   return (
     <div className="bg-mainBg flex flex-wrap flex-col">
-      <NavBar></NavBar>
+      <NavBar at="contact"></NavBar>
       <CircularGradient></CircularGradient>
     </div>
   );
