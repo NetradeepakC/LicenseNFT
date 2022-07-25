@@ -6,6 +6,22 @@ import { loadWeb3, getUser, loadAccount } from "../../Services/web3";
 export default function NavBar(props) {
   const router = useNavigate();
   const [wallet, setWallet] = useState("");
+  const navStyle =
+    "px-3 lg:px-12 font-bold decoration-sky-500 decoration-2 underline underline-offset-8 hover:cursor-pointer";
+  const navStyle2 =
+    "px-3 lg:px-12 hover:font-bold hover:cursor-pointer hover:decoration-sky-500 hover:decoration-2 hover:underline hover:underline-offset-8";
+  let style1 = navStyle2;
+  let style2 = navStyle2;
+  let style3 = navStyle2;
+  if (props.at === "home") {
+    style1 = navStyle;
+  }
+  if (props.at === "about") {
+    style2 = navStyle;
+  }
+  if (props.at === "contact") {
+    style3 = navStyle;
+  }
   const connect = async (event) => {
     event.preventDefault();
     await loadWeb3();
@@ -30,15 +46,16 @@ export default function NavBar(props) {
         </h1>
         <ul className="mb-5 lg:mb-0 flex grow justify-center self-center">
           <li
-            className="px-3 lg:px-12 hover:font-bold hover:decoration-sky-500 hover:decoration-2 hover:underline hover:underline-offset-8 hover:cursor-pointer"
+            className={style1}
             onClick={() => {
+              console.log(props.typeOfLogin);
               router("/");
             }}
           >
             Home
           </li>
           <li
-            className="px-3 lg:px-12 hover:font-bold hover:cursor-pointer hover:decoration-sky-500 hover:decoration-2 hover:underline hover:underline-offset-8"
+            className={style2}
             onClick={() => {
               router("/about");
             }}
@@ -46,7 +63,7 @@ export default function NavBar(props) {
             About Us
           </li>
           <li
-            className="px-3 lg:px-12 hover:font-bold hover:cursor-pointer hover:decoration-sky-500 hover:decoration-2 hover:underline hover:underline-offset-8"
+            className={style3}
             onClick={() => {
               router("/contact");
             }}

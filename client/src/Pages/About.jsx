@@ -2,12 +2,11 @@ import React from "react";
 import CircularGradient from "../Components/HomePage/CircularGradient";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../Components/HomePage/NavBar";
-const About = () => {
-  const router = useNavigate();
+const About = (props) => {
   return (
     <div className="bg-mainBg flex flex-wrap flex-col">
       <CircularGradient />
-      <NavBar></NavBar>
+      <NavBar at="about" typeOfUser={props.typeOfUser}></NavBar>
       <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white font-poppins self-center">
         Who Are We ?
       </h1>
