@@ -53,7 +53,11 @@ export default function Details(props) {
         <ul className="flex justify-around">{jsx}</ul>
       </div>
       {sel === "description" ? (
-        <Description></Description>
+        <Description
+          data={location.state.data}
+          user={location.state.user}
+          token={location.state.token}
+        ></Description>
       ) : (
         <Transfer></Transfer>
       )}

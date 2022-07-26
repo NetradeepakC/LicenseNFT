@@ -38,6 +38,7 @@ const LoggedinLanding = () => {
       }
     }
     setData(finalData);
+    console.log(data);
   };
 
   const retrieveForSeller = async () => {

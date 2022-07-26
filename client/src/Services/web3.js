@@ -221,7 +221,7 @@ export const takeDownFromSale = async(account, tokenId)=>{
 
 export const getCurrentOwner = async(account, tokenId)=>{
   try {
-    const result=await instance.methods.getCurrentOwner().call(tokenId,{from:account});
+    const result=await instance.methods.getCurrentOwner(tokenId).call({from:account});
     return result;
   }
   catch (err) {
