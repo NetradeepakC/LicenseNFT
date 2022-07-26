@@ -30,7 +30,6 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         addSerial(tokenId);
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-        existingURIs[uri] = true;
         addressSoldListMap[msg.sender].push(tokenId);
         usedSerials[tokenId] = true;
         serialProductMap[tokenId] = product(
@@ -96,6 +95,15 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         returns (string memory)
     {
         return "Illegal Access";
+    }
+
+    function transfer(uint16[] memory parts, address to)
+        public
+        onlyCurrentOwner(parts)
+    {
+        uint256 serial = combine(parts);
+        _beforeTokenTransfer(msg.sender, to, serial);
+        _afterTokenTransfer(msg.sender, to, serial);
     }
 
     function _beforeTokenTransfer(
