@@ -17,49 +17,44 @@ export default function Content() {
 
   return (
     <div className="text-white">
-      <form>
+      <form className="grid grid-cols-2 w-1/3 m-auto">
         <label type="text">Product Name</label>
         <input
-          className="mb-10 text-black"
+          className="mb-10 text-black rounded"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />{" "}
-        <br />
         <label type="text">Product Serial</label>
         <input
-          className="mb-10 text-black"
+          className="mb-10 text-black rounded"
           type="text"
           value={serial}
           onChange={(e) => setSerial(e.target.value)}
         />{" "}
-        <br />
         <label type="text">Address of Recipient</label>
         <input
-          className="mb-10 text-black"
+          className="mb-10 text-black rounded"
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />{" "}
-        <br />
         <label type="text">Valid Until</label>
         <input
-          className="mb-10 text-black"
+          className="mb-10 text-black rounded"
           type="text"
           value={valid}
           onChange={(e) => setValid(e.target.value)}
         />{" "}
-        <br />
         <label type="text">Terms And Conditions</label>
         <input
-          className="mb-10 text-black"
+          className="mb-10 text-black rounded"
           type="text"
           value={tnc}
           onChange={(e) => setTnc(e.target.value)}
         />{" "}
-        <br />
         <button
-          className="text-white"
+          className="text-white col-span-2 px-12 py-4  border-2 border-btnColor rounded-xl hover:bg-btnColor"
           onClick={(e) => {
             mint(e, name, serial, address, tnc, valid);
           }}
