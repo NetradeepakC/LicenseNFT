@@ -232,6 +232,11 @@ export const getCurrentOwner = async(account, tokenId)=>{
 
 export const transfer = async(from, to, tokenId)=>{
   try{
-    await instance.methods.transfer(tokenId, to, {from:from});
+    console.log(typeof(from)); console.log(typeof(to));console.log(typeof(tokenId));
+    await instance.methods.transfer(tokenId, to).send({from:from}) ;
+  }
+  catch(err){
+    window.alert(err);
+
   }
 }

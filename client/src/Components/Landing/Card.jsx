@@ -19,7 +19,7 @@ const Card = (props) => {
               "License is expired"
             ) {
               router("/product/" + props.id, {
-                state: { data: data, user: props.user },
+                state: { data: data, user: props.user, token: props.token },
               });
             } else {
               window.alert(
@@ -29,7 +29,7 @@ const Card = (props) => {
             }
           } else {
             router("/product/" + props.id, {
-              state: { data: data, user: props.user },
+              state: { data: data, user: props.user, token: props.token },
             });
           }
         }}
