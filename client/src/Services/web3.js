@@ -229,3 +229,9 @@ export const getCurrentOwner = async(account, tokenId)=>{
     // window.location.reload();
   };
 }
+
+export const transfer = async(from, to, tokenId)=>{
+  try{
+    await instance.methods.transfer(tokenId, to, {from:from});
+  }
+}
