@@ -7,14 +7,13 @@ import "./Ownership.sol";
 import "./Misc.sol";
 
 contract License is ERC721, ERC721URIStorage, Whitelist {
-    mapping(string => bool) private existingURIs;
     mapping(address => string) private addressURIMap;
 
     constructor() ERC721("License", "License") {}
 
-    // function _baseURI() internal pure override returns (string memory) {
-    //     return "ipfs://";
-    // }
+    function _baseURI() internal pure override returns (string memory) {
+        return "ipfs://";
+    }
 
     function mint(
         string memory name,
@@ -26,7 +25,6 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         ProductType pType
     ) public onlySellar(msg.sender) {
         require(usedBrandIDs[to], "Only registered members allowed");
-        require(!existingURIs[uri], concatenate(uri, " : URI already in use."));
         uint256 tokenId = combine(seeds);
         require(!usedSerials[tokenId], "Serial ID must be unused");
         addSerial(tokenId);
