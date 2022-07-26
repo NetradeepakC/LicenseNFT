@@ -7,14 +7,13 @@ import "./Ownership.sol";
 import "./Misc.sol";
 
 contract License is ERC721, ERC721URIStorage, Whitelist {
-    mapping(string => bool) private existingURIs;
     mapping(address => string) private addressURIMap;
 
     constructor() ERC721("License", "License") {}
 
-    // function _baseURI() internal pure override returns (string memory) {
-    //     return "ipfs://";
-    // }
+    function _baseURI() internal pure override returns (string memory) {
+        return "ipfs://";
+    }
 
     function mint(
         string memory name,
@@ -26,13 +25,11 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         ProductType pType
     ) public onlySellar(msg.sender) {
         require(usedBrandIDs[to], "Only registered members allowed");
-        require(!existingURIs[uri], concatenate(uri, " : URI already in use."));
         uint256 tokenId = combine(seeds);
         require(!usedSerials[tokenId], "Serial ID must be unused");
         addSerial(tokenId);
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-        existingURIs[uri] = true;
         addressSoldListMap[msg.sender].push(tokenId);
         usedSerials[tokenId] = true;
         serialProductMap[tokenId] = product(
@@ -98,6 +95,15 @@ contract License is ERC721, ERC721URIStorage, Whitelist {
         returns (string memory)
     {
         return "Illegal Access";
+    }
+
+    function transfer(uint16[] memory parts, address to)
+        public
+        onlyCurrentOwner(parts)
+    {
+        uint256 serial = combine(parts);
+        _beforeTokenTransfer(msg.sender, to, serial);
+        _afterTokenTransfer(msg.sender, to, serial);
     }
 
     function _beforeTokenTransfer(
