@@ -1,8 +1,15 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCurrentOwner, loadAccount } from "../../Services/web3";
-import { useState } from "react";
 export default function Description(props) {
+  const typeOfDevice = [
+    "Smart Home",
+    "Smartphone",
+    "Computer",
+    "Appliance",
+    "Clothing",
+    "Car",
+  ];
   const [owner, setOwner] = useState("");
   const loadStuff = async () => {
     const account = await loadAccount(0);
@@ -24,26 +31,23 @@ export default function Description(props) {
       </>
     ) : (
       <>
-        <h1 className="font-bold">Owned By</h1>
+        <h1 className="font-bold text-white">Owned By</h1>
         <p className="mb-10 md:mb-0 justify-self-end">{owner}</p>
       </>
     );
   return (
-    <div className="text-white md:w-4/6 mx-auto p-8 leading-10">
-      <p className="w-4/5">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam
-        assumenda reiciendis, tempore totam maxime ab nobis consequatur magnam
-        odio ea harum dignissimos minus ipsum eum cupiditate nesciunt, fuga
-        voluptatibus fugit?
-      </p>
-
+    <div className="text-paraColor md:w-4/6 mx-auto p-8 leading-10">
       <div className="grid grid-cols-2 md:w-4/5 gap-y-4 mt-8">
+        <h1 className="font-bold text-white">Product Type</h1>
+        <p className="mb-10 md:mb-0 justify-self-end">
+          {typeOfDevice[props.data.pType]}
+        </p>
         {jsx}
 
-        <h1 className="font-bold">Blockchain</h1>
+        <h1 className="font-bold text-white">Blockchain</h1>
         <p className="mb-10 md:mb-0 justify-self-end">Ethereum</p>
-        <h1 className="font-bold">Network</h1>
-        <p className="mb-10 md:mb-0 justify-self-end">Polgon Mumbai Testnet</p>
+        <h1 className="font-bold text-white">Network</h1>
+        <p className="mb-10 md:mb-0 justify-self-end">Polygon Mumbai Testnet</p>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "./NavBar";
 import Description from "./Description";
 import Transfer from "./Transfer";
+import History from "./History";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 export default function Details(props) {
@@ -11,8 +12,6 @@ export default function Details(props) {
   const selected = " bg-btnColor rounded-xl ";
   let toPut1 = sel === "description" ? nav_padding + selected : nav_padding;
   let toPut2 = sel === "description" ? nav_padding : nav_padding + selected;
-  console.log(sel);
-  console.log(location.state.user);
   const jsx =
     location.state.user === "company" ? (
       <>
@@ -23,6 +22,14 @@ export default function Details(props) {
           }}
         >
           Description
+        </li>
+        <li
+          className={toPut2}
+          onClick={() => {
+            setSel("History");
+          }}
+        >
+          History of Ownership
         </li>
       </>
     ) : (
@@ -46,9 +53,18 @@ export default function Details(props) {
         </li>
       </>
     );
+  const jsx2 =
+    location.state.user === "company" ? (
+      <>
+        <History token={location.state.token} />
+      </>
+    ) : (
+      <>
+        <Transfer></Transfer>
+      </>
+    );
   return (
     <div>
-      return (
       <div className="text-white w-3/4 mx-auto mt-12">
         <ul className="flex justify-around">{jsx}</ul>
       </div>
@@ -59,7 +75,7 @@ export default function Details(props) {
           token={location.state.token}
         ></Description>
       ) : (
-        <Transfer></Transfer>
+        jsx2
       )}
     </div>
   );

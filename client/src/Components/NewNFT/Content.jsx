@@ -53,6 +53,12 @@ export default function Content() {
           value={tnc}
           onChange={(e) => setTnc(e.target.value)}
         />{" "}
+        <input
+          className="mb-10 text-black rounded"
+          type="text"
+          value={tnc}
+          onChange={(e) => setTnc(e.target.value)}
+        />{" "}
         <button
           className="text-white col-span-2 px-12 py-4  border-2 border-btnColor rounded-xl hover:bg-btnColor"
           onClick={(e) => {
