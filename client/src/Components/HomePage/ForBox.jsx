@@ -8,14 +8,14 @@ const ForBox = (props) => {
       type: "customer",
       caption: "For Organisations ",
       description:
-        "We have a large scale group to support each other in this game, Join us to get the news as soon as possible and follow our latest announcements!",
+        "We have a solution for those who want to host their warranty issue services on the blockchain, Join us down below to get started!",
       btn_desc: "Join as a company",
     },
     {
       type: "company",
       caption: "For Customers",
       description:
-        "We have a large scale group to support each other in this game, Join us to get the news as soon as possible and follow our latest announcements!",
+        "Looking for your warrenties issued by companies from our platform? Make sure to setup MetaMask and head down below to the customer experience website.",
       btn_desc: "Join as a customer",
     },
   ];

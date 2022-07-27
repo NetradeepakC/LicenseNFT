@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import Image from "./images/herocomp.webp";
 const Hero = (props) => {
   const router = useNavigate();
 
@@ -9,13 +9,26 @@ const Hero = (props) => {
     {
       type: "customer",
       heading: "Warranties",
-      description: "Mai customer hai bohut warrenty dede bhai , kya hee hoga",
+      description:
+        "Leverage the power of the blockchain to protect the warranties of your items.",
+      image: (
+        <>
+          <img
+            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
+            alt="mockup"
+          />
+        </>
+      ),
     },
     {
       type: "company",
       heading: "Issuing Warranties",
-      description:
-        "Mai seller hai bohut warrenty dede bhai , kya hee hoga, customer ko thogunga",
+      description: "Issue warranties which persist forever in the chain",
+      image: (
+        <>
+          <img src={Image} alt="mockup" />
+        </>
+      ),
     },
   ];
   var jsx;
@@ -43,10 +56,7 @@ const Hero = (props) => {
             </button>
           </div>
           <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-            <img
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
-              alt="mockup"
-            />
+            {item.image}
           </div>
         </>
       );

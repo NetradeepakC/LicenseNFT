@@ -1,5 +1,5 @@
 import React from "react";
-
+import { FaWallet, FaClipboardList, FaExclamation } from "react-icons/fa";
 const FeatureBox = (props) => {
   const typeOfUser = [
     {
@@ -9,24 +9,24 @@ const FeatureBox = (props) => {
       box2Caption: "Find your Warranties",
       box3Caption: "View, Redeem, Resell !",
       box1Body:
-        "Once you've set up your wallet of choice, connect it to OpenSea by clicking the wallet icon in the top right corner.",
+        "Once you've set up your wallet of choice, View your ownership of all products issued by sellers on this platform",
       box2Body:
-        "Once you've set up your wallet of choice, connect it to OpenSea by clicking the wallet icon in the top right corner.",
+        "Easy to access and view UI which collects all warranties belonging to you on the blockchain in one place.",
       box3Body:
-        "Once you've set up your wallet of choice, connect it to OpenSea by clicking the wallet icon in the top right corner.",
+        "Easily verify validity and redeem the warranties. Our platform will auto-remove expired warranties so you don't have to worry about validity. Also you can transfer ownership to any new individual to whom you sell the item to",
     },
     {
       type: "company",
       caption: "Generate Waranty for your products easily",
       box1Caption: "Set up your wallet",
       box2Caption: "List waranty for every product",
-      box3Caption: "Verify warranty after reselling of products!",
+      box3Caption: "Verify warranty",
       box1Body:
-        "Once you've set up your wallet of choice, connect it to OpenSea by clicking the wallet icon in the top right corner.",
+        "Once you've set up your wallet of choice, connect it to our platform using the Connect Wallet button above. Feel free to issue new productss in the main page",
       box2Body:
-        "Once you've set up your wallet of choice, connect it to OpenSea by clicking the wallet icon in the top right corner.",
+        "List all the warranties you have issued from the main page and view their details for redeem verification",
       box3Body:
-        "Once you've set up your wallet of choice, connect it to OpenSea by clicking the wallet icon in the top right corner.",
+        "Our platform keeps track of current owner of products which makes evaluation of 2nd hand products easy.",
     },
   ];
   var jsx;
