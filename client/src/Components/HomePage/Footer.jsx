@@ -7,33 +7,28 @@ const Footer = () => {
         <div className="grid lg:grid-cols-2 gap-4">
           <div className="mb-6 md:mb-0">
             <h5 className="mb-2 font-poppins text-white font-extrabold">
-              Footer text
+              Note to testers and developers
             </h5>
             <p className="mb-4 text-paraColor font-poppins">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
-              atque ea quis molestias. Fugiat pariatur maxime quis culpa
-              corporis vitae repudiandae aliquam voluptatem veniam, est atque
-              cumque eum delectus sint!
+              This is a product is still in developement and is to be tested in
+              a devoloper environment. Make sure not to use test accounts and
+              not your actual accounts to make transactions!
             </p>
           </div>
           <div className="mb-6 md:mb-0">
             <h5 className="mb-2 font-poppins text-white font-extrabold">
-              Footer text
+              GitHub Repository Link
             </h5>
             <p className="mb-4 text-paraColor font-poppins">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
-              atque ea quis molestias. Fugiat pariatur maxime quis culpa
-              corporis vitae repudiandae aliquam voluptatem veniam, est atque
-              cumque eum delectus sint!
+              <a href="#">dasdasdas</a> <br /> Created By: Netradeepak Manoj
+              Chinchwadkar, Monjoy Narayan Choudhury and Rudransh Dixit
             </p>
           </div>
         </div>
       </div>
       <div className="text-center text-paraColor p-4">
         © 2022 Copyright:
-        <a className="text-white" href="#">
-          &nbsp;WarrantyIt!
-        </a>
+        <a className="text-white">&nbsp;WarrantyIt!</a>
       </div>
     </footer>
   );

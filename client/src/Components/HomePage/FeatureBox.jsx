@@ -1,8 +1,7 @@
 import React from "react";
-// import { FaWallet, FaClipboardList, FaExclamation } from "react-icons/fa";
-import wallet from './images/wallet.png'
-import search from './images/search.png'
-import money from './images/money.png'
+import wallet from "./images/wallet.png";
+import search from "./images/search.png";
+import money from "./images/money.png";
 const FeatureBox = (props) => {
   const typeOfUser = [
     {
