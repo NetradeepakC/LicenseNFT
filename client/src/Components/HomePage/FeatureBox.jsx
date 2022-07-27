@@ -1,5 +1,8 @@
 import React from "react";
-import { FaWallet, FaClipboardList, FaExclamation } from "react-icons/fa";
+// import { FaWallet, FaClipboardList, FaExclamation } from "react-icons/fa";
+import wallet from './images/wallet.png'
+import search from './images/search.png'
+import money from './images/money.png'
 const FeatureBox = (props) => {
   const typeOfUser = [
     {
@@ -41,7 +44,9 @@ const FeatureBox = (props) => {
 
             <div className="lg:flex px-10 lg:px-0 flex-wrap justify-center lg:my-auto w-screen lg:h-full gap-4">
               <div className=" bg-cardColor rounded-lg mb-10 lg:mb-0 lg:w-1/4 md:h-1/2 flex flex-wrap flex-col ">
-                <div className="circle bg-btnColor rounded-full w-24 h-24 self-center my-6"></div>
+                <div className="circle bg-btnColor rounded-full w-24 h-24 self-center my-6">
+                  <img className="p-4" src={wallet} alt="wallet" srcset="" />
+                </div>
                 <h1 className="text-center text-white font-poppins text-2xl font-extrabold">
                   {item.box1Caption}
                 </h1>
@@ -50,7 +55,9 @@ const FeatureBox = (props) => {
                 </p>
               </div>
               <div className="bg-cardColor rounded-lg mb-10 lg:mb-0 lg:w-1/4 md:h-1/2 flex flex-wrap flex-col">
-                <div className="circle bg-btnColor rounded-full w-24 h-24 self-center my-6"></div>
+                <div className="circle bg-btnColor rounded-full w-24 h-24 self-center my-6">
+                  <img className="p-4" src={search} alt="search" srcset="" />
+                </div>
                 <h1 className="px-2 text-center text-white font-poppins text-2xl font-extrabold">
                   {item.box2Caption}
                 </h1>
@@ -59,7 +66,9 @@ const FeatureBox = (props) => {
                 </p>
               </div>
               <div className="bg-cardColor rounded-lg mb-10 lg:mb-0 lg:w-1/4 md:h-1/2 flex flex-wrap flex-col">
-                <div className="circle bg-btnColor rounded-full w-24 h-24 self-center my-6"></div>
+                <div className="circle bg-btnColor rounded-full w-24 h-24 self-center my-6">
+                  <img className="p-4" src={money} alt="money" srcset="" />
+                </div>
                 <h1 className="text-center text-white font-poppins text-2xl font-extrabold">
                   {item.box3Caption}
                 </h1>
