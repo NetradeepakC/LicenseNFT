@@ -22,6 +22,12 @@ export default function Description(props) {
     else {
     }
   }, []);
+  const validityJsx =
+    props.data.birthtime * 1000 + props.data.lifespan * 1000 > +new Date() ? (
+      <p className="mb-10 md:mb-0 justify-self-end text-green-500">Valid</p>
+    ) : (
+      <p className="mb-10 md:mb-0 justify-self-end text-red-600">Expired</p>
+    );
 
   const jsx =
     props.user === "customer" ? (
@@ -38,6 +44,8 @@ export default function Description(props) {
   return (
     <div className="text-paraColor md:w-4/6 mx-auto p-8 leading-10">
       <div className="grid grid-cols-2 md:w-4/5 gap-y-4 mt-8">
+        <h1 className="font-bold text-white">Validity Status</h1>
+        {validityJsx}
         <h1 className="font-bold text-white">Product Type</h1>
         <p className="mb-10 md:mb-0 justify-self-end">
           {typeOfDevice[props.data.pType]}
@@ -47,7 +55,7 @@ export default function Description(props) {
         <h1 className="font-bold text-white">Blockchain</h1>
         <p className="mb-10 md:mb-0 justify-self-end">Ethereum</p>
         <h1 className="font-bold text-white">Network</h1>
-        <p className="mb-10 md:mb-0 justify-self-end">Polygon Mumbai Testnet</p>
+        <p className="mb-10 md:mb-0 justify-self-end">Ganache Testnet</p>
       </div>
     </div>
   );
