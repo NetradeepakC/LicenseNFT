@@ -85,7 +85,7 @@ export const loadWeb3 = async () => {
     };
   };
 
-  export const issueNFT = async(fromAddress,name,serialid,toAddress,uri,expiry)=>{
+  export const issueNFT = async(fromAddress,name,serialid,toAddress,uri,expiry,ptype)=>{
     try{
       var temp=[];
     for(let i=0;i<16;i++){
@@ -93,7 +93,7 @@ export const loadWeb3 = async () => {
     }
     console.log(temp);
           
-    await instance.methods.mint(name,serialid,toAddress,temp,uri,expiry,1).send({from:fromAddress});
+    await instance.methods.mint(name,serialid,toAddress,temp,uri,expiry,ptype).send({from:fromAddress});
   }
   catch (err) {
       window.alert(err);

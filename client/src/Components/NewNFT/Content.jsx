@@ -7,13 +7,21 @@ export default function Content() {
   const [address, setAddress] = useState("");
   const [valid, setValid] = useState("");
   const [tnc, setTnc] = useState("");
-
-  const mint = async (event, name, serial, address, tnc, valid) => {
+  const [select, setSelect] = useState("Smart Home");
+  const mint = async (event, name, serial, address, tnc, valid, ptype) => {
     event.preventDefault();
     const acc = await loadAccount(0);
     console.log(acc);
-    await issueNFT(acc, name, serial, address, tnc, valid);
+    await issueNFT(acc, name, serial, address, tnc, valid, ptype);
   };
+  const typeOfDevice = [
+    "Smart Home",
+    "Smartphone",
+    "Computer",
+    "Appliance",
+    "Clothing",
+    "Car",
+  ];
 
   return (
     <div className="text-white">
@@ -54,10 +62,25 @@ export default function Content() {
           onChange={(e) => setTnc(e.target.value)}
         />{" "}
         <label type="text">Type of Object</label>
+        <select
+          className="mb-10 text-black rounded"
+          value={select}
+          onChange={(e) => {
+            setSelect(e.target.value);
+          }}
+        >
+          <option>Smart Home</option>
+          <option>Smartphone</option>
+          <option>Computer</option>
+          <option>Appliance</option>
+          <option>Clothing</option>
+          <option>Car</option>
+        </select>
         <button
           className="text-white col-span-2 px-12 py-4  border-2 border-btnColor rounded-xl hover:bg-btnColor"
           onClick={(e) => {
-            mint(e, name, serial, address, tnc, valid);
+            let i = typeOfDevice.indexOf(select);
+            mint(e, name, serial, address, tnc, valid, i);
           }}
         >
           Submit
