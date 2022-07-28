@@ -72,7 +72,7 @@ export default function NavBar(props) {
           </li>
         </ul>
         <button
-          className="lg:mr-64 font-bold border-2 px-6 py-4 content-center rounded-2xl border-sky-500"
+          className="lg:mr-64 font-bold border-2 px-6 py-4 content-center rounded-2xl border-sky-500 hover:bg-btnColor hover:border-btnColor"
           onClick={connect}
         >
           Connect Wallet
