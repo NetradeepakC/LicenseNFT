@@ -4,12 +4,12 @@
 
 - Install 
 
-  [Truffle]: https://trufflesuite.com/docs/truffle/getting-started/installation/
-  [Ganache]: https://trufflesuite.com/ganache/
+  [Truffle]: https://trufflesuite.com/docs/truffle/getting-started/installation/	"Truffle"
+  [Ganache]: https://trufflesuite.com/ganache/	"Ganache"
 
 - Install 
 
-  [MetaMask]: https://metamask.io/
+  [MetaMask]: https://metamask.io/	"Metamask"
 
    in your browser.
 
