@@ -13,6 +13,7 @@ import { useEffect } from "react";
 const Card = (props) => {
   const router = useNavigate();
   const [image, setImage] = useState(null);
+
   const selectImage = (val) => {
     if (val == 0) {
       setImage(SmartHome);
@@ -36,6 +37,26 @@ const Card = (props) => {
   useEffect(() => {
     selectImage(props.data.pType);
   }, []);
+  const validityJsx =
+    props.data.birthtime * 1000 + props.data.lifespan * 1000 > +new Date() ? (
+      <span className="text-green-400">Valid</span>
+    ) : (
+      <span className="text-red-600">Expired</span>
+    );
+  const jsx =
+    props.user === "company" ? (
+      <>
+        {" "}
+        <p className="font-poppins text-l">
+          Serial Number : {props.data.serialID}
+        </p>
+      </>
+    ) : (
+      <>
+        <p className="font-poppins text-l">Validity : {validityJsx}</p>
+      </>
+    );
+
   return (
     <div className="bg-cardColor rounded-xl px-6 py-6">
       <img src={image} className=""></img>
@@ -69,9 +90,7 @@ const Card = (props) => {
       >
         {props.data.name}
       </h1>
-      <p className="font-poppins text-l">
-        Serial Number : {props.data.serialID}
-      </p>
+      {jsx}
     </div>
   );
 };

@@ -40,8 +40,8 @@ export const loadWeb3 = async () => {
     return account;
     }
       catch (err) {
-      window.alert(err);
-      // window.location.reload();
+      window.alert("Failed to Load Account!");
+      window.location.reload();
     };
   };
 
@@ -56,7 +56,7 @@ export const loadWeb3 = async () => {
     return result;
     }
       catch (err) {
-      window.alert(err);
+      window.alert("Unable to access account!");
       window.location.reload();
     };
   }
@@ -69,8 +69,8 @@ export const loadWeb3 = async () => {
     }); 
     }
       catch (err) {
-      window.alert(err);
-      // window.location.reload();
+      window.alert("Failed to register User!");
+      window.location.reload();
     };
   };
 
@@ -80,8 +80,8 @@ export const loadWeb3 = async () => {
       return name ;
     }
       catch (err) {
-      window.alert(err);
-      // window.location.reload();
+      window.alert("Users couldn't be retrieved");
+      window.location.reload();
     };
   };
 
@@ -96,8 +96,8 @@ export const loadWeb3 = async () => {
     await instance.methods.mint(name,serialid,toAddress,temp,uri,expiry,ptype).send({from:fromAddress});
   }
   catch (err) {
-      window.alert(err);
-      //window.location.reload();
+      window.alert("There was some unexpected error");
+      window.location.reload();
     };
   }
 
@@ -113,9 +113,9 @@ export const loadWeb3 = async () => {
         return result;
     }
     catch (err) {
-      window.alert(err);
+      window.alert("There was some unexpected errors in retrieval!");
       
-      // window.location.reload();
+      window.location.reload();
     };
   }
   
@@ -132,7 +132,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
   }
   
@@ -143,7 +143,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
   }
 
@@ -154,7 +154,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
   }
 
@@ -164,7 +164,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
   }
 
@@ -174,7 +174,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
   }
 
@@ -184,7 +184,7 @@ export const loadWeb3 = async () => {
     }
     catch (err) {
       window.alert(err);
-      // window.location.reload();
+      window.location.reload();
     };
   }
 
@@ -195,7 +195,7 @@ export const getOwnerList = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    // window.location.reload();
+    window.location.reload();
   };
 }
 
@@ -205,7 +205,7 @@ export const setOnSale = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    // window.location.reload();
+    window.location.reload();
   };
 }
 
@@ -215,7 +215,7 @@ export const takeDownFromSale = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    // window.location.reload();
+    window.location.reload();
   };
 }
 
@@ -226,7 +226,7 @@ export const getCurrentOwner = async(account, tokenId)=>{
   }
   catch (err) {
     window.alert(err);
-    // window.location.reload();
+    window.location.reload();
   };
 }
 
