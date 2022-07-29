@@ -6,6 +6,8 @@ import NewNFT from "./Pages/NewNFT";
 import Product from "./Pages/Product";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
+import Protected from "./Components/Protected";
+import NotFound from "./Components/404";
 function App() {
   return (
     <Router>
@@ -20,12 +22,20 @@ function App() {
             path="/company"
             element={<HomePage typeOfLogin="company" />}
           ></Route>
-          <Route path="/product/:id" element={<Product />}></Route>
-          <Route path="/landing" element={<LoggedinLanding />}></Route>
+          <Route
+            path="/product/:id"
+            element={<Protected Component={Product} />}
+          ></Route>
+          <Route
+            exact
+            path="/landing"
+            element={<Protected Component={LoggedinLanding} />}
+          ></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
-          <Route path="/new" element={<NewNFT />}></Route>
+          <Route path="/new" element={<Protected Component={NewNFT} />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
     </Router>

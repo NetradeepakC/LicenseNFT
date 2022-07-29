@@ -31,8 +31,9 @@ export default function NavBar(props) {
     const userData = await getUser(account);
     console.log(userData);
     if (userData != null) {
+      localStorage.setItem("login", true);
       router("/landing", { state: { userType: props.typeOfLogin } });
-      // window.location.reload();
+      window.location.reload();
     } else {
       window.alert("Account does not exist. Please register!");
     }

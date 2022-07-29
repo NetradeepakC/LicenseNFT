@@ -5,7 +5,7 @@ import Filters from "../Components/Landing/Filters";
 import Headline from "../Components/Landing/Headline";
 import ProductGrid from "../Components/Landing/ProductGrid";
 import SeachBar from "../Components/Landing/SeachBar";
-import { useLocation } from "react-router-dom";
+import { Router, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -22,7 +22,6 @@ const LoggedinLanding = () => {
   const [data, setData] = useState(null);
   const [account, setAccount] = useState(null);
   const typeOfUser = location.state.userType;
-  console.log(typeOfUser);
 
   const retrieve = async () => {
     var finalData = [];

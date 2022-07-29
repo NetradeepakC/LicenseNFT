@@ -32,6 +32,7 @@ const Register = () => {
       window.alert("Something Went Wrong!");
       return;
     }
+    localStorage.setItem("login", true);
     router("/landing", { state: { userType: typeOfUser } });
     window.location.reload();
   };
